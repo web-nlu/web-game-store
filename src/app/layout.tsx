@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import React from "react";
+import Head from "next/head";
+import Header from "@/components/head/header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,9 +27,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Head>
+        <title>Game Shop - Mua bán tài khoản game uy tín</title>
+        <meta name="description" content="Mua bán tài khoản game uy tín, giá rẻ" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Header/>
         {children}
       </body>
     </html>
