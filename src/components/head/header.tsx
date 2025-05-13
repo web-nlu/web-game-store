@@ -1,8 +1,14 @@
 "use client"
 import Link from "next/link";
 import {useState} from "react";
+import Image from "next/image";
 
-export default function Header() {
+type Props = {
+  isAuthenticated: boolean;
+  user: UserInfo
+}
+
+export default function Header({isAuthenticated, user}: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
     <header className="bg-gradient-to-r from-blue-700 to-indigo-900 text-white shadow-lg">
@@ -45,11 +51,21 @@ export default function Header() {
               <span
                 className="absolute -top-2 -right-2 bg-red-500 text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
             </Link>
-
-            <Link href="/dang-nhap" className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md font-medium">
-              Đăng nhập
-            </Link>
-
+            {
+              !isAuthenticated ?
+                (<Link href="/dang-nhap" className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md font-medium">
+                  Đăng nhập
+                </Link>)
+               : (<Link href="/profile" className="flex items-center gap-2 group">
+                  <Image
+                    src={'/default-avatar.webp'}
+                    alt="avatar"
+                    width={40}
+                    height={40}
+                    className="rounded-full border-2 border-transparent group-hover:border-blue-500 transition"
+                  />
+                </Link>)
+            }
             <button
               className="md:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
