@@ -20,7 +20,7 @@ export default function Header({isAuthenticated, user}: Props) {
 
           <div className="hidden md:flex items-center space-x-6">
             <Link href="/" className="font-medium hover:text-blue-300">Trang chủ</Link>
-            <Link href="/categories" className="font-medium hover:text-blue-300">Danh mục</Link>
+            <Link href="/san-pham" className="font-medium hover:text-blue-300">Danh mục</Link>
             <Link href="/huong-dan" className="font-medium hover:text-blue-300">Hướng dẫn</Link>
             <Link href="/lien-he" className="font-medium hover:text-blue-300">Liên hệ</Link>
           </div>
@@ -82,7 +82,7 @@ export default function Header({isAuthenticated, user}: Props) {
         {isMenuOpen && (
           <div className="md:hidden mt-4 pb-2">
             <Link href="/" className="block py-2 hover:bg-blue-800 px-2 rounded">Trang chủ</Link>
-            <Link href="/danh-muc" className="block py-2 hover:bg-blue-800 px-2 rounded">Danh mục</Link>
+            <Link href="/san-pham" className="block py-2 hover:bg-blue-800 px-2 rounded">Danh mục</Link>
             <Link href="/huong-dan" className="block py-2 hover:bg-blue-800 px-2 rounded">Hướng dẫn</Link>
             <Link href="/lien-he" className="block py-2 hover:bg-blue-800 px-2 rounded">Liên hệ</Link>
             <form className="mt-2 flex">
