@@ -1,14 +1,24 @@
+'use client'
 import React, {useState} from "react";
 
-export default function AmountForm() {
+type Props = {
+  amount: number;
+  setAmount: (amount: number) => void;
+}
 
-  const [quantity, setQuantity] = useState(1);
+export default function AmountForm({ amount, setAmount }: Props) {
+
+  const [quantity, setQuantity] = useState(amount);
   const decreaseQuantity = () => {
-    setQuantity((prev) => Math.max(1, prev - 1));
+    const value = Math.max(1, quantity - 1)
+    setQuantity(value);
+    setAmount(value);
   };
 
   const increaseQuantity = () => {
-    setQuantity((prev) => prev + 1);
+    const value = Math.max(quantity + 1)
+    setQuantity(value);
+    setAmount(value);
   };
 
   return (

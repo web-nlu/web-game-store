@@ -1,5 +1,5 @@
+'use client'
 import {
-  ClockIcon,
   CreditCardIcon,
   HeartIcon,
   MessageCircleIcon,
@@ -8,13 +8,33 @@ import {
   StarIcon
 } from "lucide-react";
 import {formatPrice} from "@/utils";
-import React, {useState} from "react";
+import React from "react";
 import AccountFeature from "@/components/accountDetail/accountFeature";
 import ServiceCommitment from "@/components/accountDetail/serviceCommitment";
 import AmountForm from "@/components/common/amountForm";
 import Button from "@/components/common/button";
 
 export default function AccountInfo(accountDetail: AccountDetail) {
+  let amount = 1;
+
+  const onChangeAmount = (newAmount: number) => {
+    amount = newAmount;
+  }
+
+  const addToCart = async () => {
+    const addToCartResponse = await fetch("/api/cart", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({accountId: accountDetail.id})
+    })
+    if(addToCartResponse.status === 401) {
+      window.location.href = "/dang-nhap"
+      return;
+    }
+    window.location.href = "/gio-hang"
+  }
 
   return (
     <div className="lg:col-span-1">
@@ -58,17 +78,22 @@ export default function AccountInfo(accountDetail: AccountDetail) {
           <AccountFeature title={"Trạng thái:"} value={accountDetail.status === 'available' ? 'Còn hàng' : 'Hết hàng'}/>
         </div>
 
-        <AmountForm />
+        <AmountForm amount={amount} setAmount={onChangeAmount} />
 
         <div className="space-y-3">
-          <button
-            className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md flex items-center justify-center font-medium">
-            <ShoppingCartIcon size={20} className="mr-2"/>
-            Mua ngay
-          </button>
+          {
+            accountDetail.status === 'available' && (
+              <button
+                onClick={addToCart}
+                className="cursor-pointer w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md flex items-center justify-center font-medium">
+                <ShoppingCartIcon size={20} className="mr-2"/>
+                Mua ngay
+              </button>
+            )
+          }
           <div className="flex space-x-3">
-            <Button icon={<HeartIcon size={18} className="mr-1"/>} label={"Yêu thích"} />
-            <Button icon={<MessageCircleIcon size={18} className="mr-1"/>} label={"Chat"} />
+            <Button icon={<HeartIcon size={18} className="mr-1"/>} label={"Yêu thích"}/>
+            <Button icon={<MessageCircleIcon size={18} className="mr-1"/>} label={"Chat"}/>
           </div>
         </div>
       </div>

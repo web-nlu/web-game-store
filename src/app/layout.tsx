@@ -4,9 +4,7 @@ import "./globals.css";
 import React from "react";
 import Head from "next/head";
 import Header from "@/components/head/header";
-import {getData} from "@/lib/fetch/fetch";
 import {cookies} from "next/headers";
-import {json} from "node:stream/consumers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -59,7 +57,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header isAuthenticated={isAuthenticated} />
+        <Header isAuthenticated={isAuthenticated}  user={user}/>
         {children}
       </body>
     </html>

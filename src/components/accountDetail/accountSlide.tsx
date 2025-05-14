@@ -1,4 +1,5 @@
-import {JSX, useState} from "react";
+'use client'
+import {useState} from "react";
 import {ChevronLeftIcon, ChevronRightIcon} from "lucide-react";
 
 type AccountSlideProps = {

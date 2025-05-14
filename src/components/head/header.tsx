@@ -5,7 +5,7 @@ import Image from "next/image";
 
 type Props = {
   isAuthenticated: boolean;
-  user: UserInfo
+  user?: UserInfo
 }
 
 export default function Header({isAuthenticated, user}: Props) {
@@ -42,7 +42,7 @@ export default function Header({isAuthenticated, user}: Props) {
               </button>
             </form>
 
-            <Link href="/cart" className="relative">
+            <Link href="/gio-hang" className="relative">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                    className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}

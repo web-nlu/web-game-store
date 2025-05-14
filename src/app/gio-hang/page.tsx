@@ -1,49 +1,47 @@
 "use client"
 import Link from "next/link";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import EmptyCart from "@/components/cart/EmptyCart";
 import {formatPrice} from "@/utils";
-import {CreditCard, Minus, Plus, Trash2} from "lucide-react";
+import {CreditCard, Trash2} from "lucide-react";
+import CartItem from "@/components/cart/cartItem";
+import _ from "lodash";
 
 export default function CartPage() {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      title: 'Tài khoản Liên Minh Huyền Thoại Rank Thách Đấu',
-      price: 2500000,
-      game: 'Liên Minh Huyền Thoại',
-      quantity: 1,
-      image: '/images/account-lol-1.jpg'
-    },
-    {
-      id: 4,
-      title: 'Tài khoản Mobile Legends VIP',
-      price: 1500000,
-      game: 'Mobile Legends',
-      quantity: 1,
-      image: '/images/account-ml-1.jpg'
-    },
-    {
-      id: 6,
-      title: 'Tài khoản Valorant Full Rank Bất Tử',
-      price: 1800000,
-      game: 'Valorant',
-      quantity: 1,
-      image: '/images/account-valorant-1.jpg'
+  const [cartItems, setCartItems] = useState([] as CartItem[]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  useEffect(() => {
+    loadCart();
+  }, [])
+
+  const onRemove = (index: number) => {
+    const newItems = _.cloneDeep(cartItems);
+    newItems.splice(index, 1);
+    setCartItems(newItems);
+  }
+
+  const removeAll = async () => {
+    const removeResponse = await fetch(`/api/cart/removeAll`,  {method: "DELETE"})
+    if (removeResponse.ok) {
+      setCartItems([])
     }
-  ]);
-  const calculateSubtotal = () => {
-    return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-  };
+  }
+
+  const loadCart = async () => {
+    const cartResponse = await fetch("/api/cart/me")
+    const {accounts, totalPrice} = await cartResponse.json()
+    setCartItems(accounts);
+    setTotalPrice(totalPrice);
+  }
 
   // Tính phí dịch vụ (giả sử 5% của tổng giá trị)
   const calculateServiceFee = () => {
-    return calculateSubtotal() * 0.05;
+    return totalPrice * 0.05;
   };
 
   // Tính tổng thanh toán
   const calculateTotal = () => {
-    return calculateSubtotal() + calculateServiceFee();
+    return totalPrice + calculateServiceFee();
   };
   return (
     <div className="min-h-screen bg-gray-100">
@@ -64,63 +62,22 @@ export default function CartPage() {
             {/* Danh sách sản phẩm */}
             <div className="lg:col-span-2">
               <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                <div className="p-6 border-b border-gray-200">
+                <div className="p-6 border-b border-gray-200 flex flex-col sm:flex-row sm:justify-between gap-5 ">
                   <h2 className="text-xl font-semibold mb-0">Sản phẩm ({cartItems.length})</h2>
+                  <button
+                    onClick={removeAll}
+                    className="text-red-600 hover:text-red-800 transition flex items-center cursor-pointer"
+                    aria-label="Xóa sản phẩm"
+                  >
+                    <Trash2 size={18} className="mr-1"/>
+                    <span>Xóa tất cả</span>
+                  </button>
                 </div>
 
                 <ul className="divide-y divide-gray-200">
-                  {cartItems.map((item) => (
-                    <li key={item.id} className="p-6">
-                      <div className="flex flex-col sm:flex-row items-start sm:items-center">
-                        {/* Hình ảnh sản phẩm */}
-                        <div
-                          className="bg-gray-200 rounded-lg w-full sm:w-24 h-24 flex items-center justify-center mb-4 sm:mb-0 flex-shrink-0">
-                          <span className="text-4xl">
-                            {item.game.includes('Liên Minh') ? '🎮' :
-                              item.game.includes('Mobile Legends') ? '📱' : '🔫'}
-                          </span>
-                        </div>
-
-                        {/* Thông tin sản phẩm */}
-                        <div className="ml-0 sm:ml-4 flex-grow">
-                          <div className="flex flex-col sm:flex-row sm:justify-between">
-                            <div>
-                              <h3 className="font-medium text-gray-900">{item.title}</h3>
-                              <p className="text-sm text-blue-600">{item.game}</p>
-                            </div>
-                            <div className="mt-2 sm:mt-0 text-lg font-bold text-gray-900">
-                              {formatPrice(item.price)}
-                            </div>
-                          </div>
-
-                          <div className="mt-4 flex items-center justify-between">
-                            <div className="flex items-center border border-gray-300 rounded">
-                              <button
-                                className="px-3 py-1 hover:bg-gray-100 transition"
-                                aria-label="Giảm số lượng"
-                              >
-                                <Minus size={16}/>
-                              </button>
-                              <span className="px-4 py-1 border-l border-r border-gray-300">{item.quantity}</span>
-                              <button
-                                className="px-3 py-1 hover:bg-gray-100 transition"
-                                aria-label="Tăng số lượng"
-                              >
-                                <Plus size={16}/>
-                              </button>
-                            </div>
-                            <button
-                              className="text-red-600 hover:text-red-800 transition flex items-center"
-                              aria-label="Xóa sản phẩm"
-                            >
-                              <Trash2 size={18} className="mr-1"/>
-                              <span>Xóa</span>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  ))}
+                  {cartItems.map((item, index) =>
+                    <CartItem key={item.id} item={item} index={index} onRemove={onRemove}/>
+                  )}
                 </ul>
               </div>
             </div>
@@ -133,7 +90,7 @@ export default function CartPage() {
                 <div className="space-y-4">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Tạm tính</span>
-                    <span className="font-medium">{formatPrice(calculateSubtotal())}</span>
+                    <span className="font-medium">{formatPrice(totalPrice)}</span>
                   </div>
 
                   <div className="flex justify-between">
