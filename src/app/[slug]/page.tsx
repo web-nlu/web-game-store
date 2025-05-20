@@ -6,7 +6,7 @@ import {redirect} from "next/navigation";
 
 export default async function AccountDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const res = await fetch(`http://localhost:3000/api/accounts/${slug}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/accounts/${slug}`);
   const { account } = await res.json();
   if(!account) {
     redirect("/")

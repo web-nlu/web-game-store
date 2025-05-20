@@ -3,7 +3,7 @@ import {NextRequest, NextResponse} from "next/server";
 export async function DELETE(req: NextRequest) {
   try {
     const token = req.cookies.get("token")?.value;
-    const res = await fetch(`http://localhost:8080/api/cart/remove-all`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/cart/remove-all`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`,

@@ -9,7 +9,7 @@ export async function loginAction(formData: FormData) {
     const email = formData.get('email')
     const password = formData.get('password')
 
-    const res = await fetch('http://localhost:3000/api/auth/login', {
+    const res = await fetch('${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/auth/login', {
       method: "POST",
       body: JSON.stringify({email, password}),
       headers: {

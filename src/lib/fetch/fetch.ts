@@ -4,7 +4,7 @@ export async function getData({url, params = {}, next, cache}: { url: string, pa
   const cookieStore = await cookies()
   const token = cookieStore.get('token')?.value
   try {
-    const res = await fetch(`http://localhost:8080/api/${url}?${new URLSearchParams(params)}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/${url}?${new URLSearchParams(params)}`, {
       method: 'GET',
       next,
       headers: {
@@ -29,7 +29,7 @@ export async function postData({url, body = {}}: { url: string, body?: any }) {
   const cookieStore = await cookies()
   const token = cookieStore.get('token')?.value
   try {
-    const res = await fetch(`http://localhost:8080/api/${url}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/${url}`, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {

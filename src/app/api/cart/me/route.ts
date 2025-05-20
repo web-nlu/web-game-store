@@ -3,7 +3,7 @@ import {NextRequest, NextResponse} from "next/server";
 export async function GET(req: NextRequest) {
   try {
     const token = req.cookies.get("token")?.value;
-    const res = await fetch(`http://localhost:8080/api/cart/me`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/cart/me`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,

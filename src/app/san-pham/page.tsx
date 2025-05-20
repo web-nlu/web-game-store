@@ -10,7 +10,7 @@ type SearchParams = Promise<{
 
 export default async function AccountsPage({searchParams}: {searchParams: SearchParams}) {
   const {category} = await searchParams
-  const requestCategories = await fetch("http:/localhost:3000/api/categories", {
+  const requestCategories = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/categories`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'

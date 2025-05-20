@@ -4,7 +4,7 @@ export async function POST(req: NextRequest) {
   try {
     const token = req.cookies.get("token")?.value;
     const body = await req.json();
-    const res = await fetch(`http://localhost:8080/api/cart/add/${body.accountId}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/cart/add/${body.accountId}`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`,

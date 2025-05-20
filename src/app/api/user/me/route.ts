@@ -3,7 +3,7 @@ import {NextRequest, NextResponse} from "next/server";
 export async function GET(req: NextRequest) {
   try {
     const header = req.headers;
-    const res = await fetch(`http://localhost:8080/api/user/me`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/user/me`, {
       method: 'GET',
       headers: {
         'Authorization': header.get('Authorization') ?? '',

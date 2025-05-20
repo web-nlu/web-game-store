@@ -3,7 +3,7 @@ import {NextRequest, NextResponse} from "next/server";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const res = await fetch(`http://localhost:8080/api/auth/u/refresh-token`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/auth/u/refresh-token`, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {

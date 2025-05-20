@@ -6,7 +6,7 @@ export async function middleware(request: NextRequest) {
   const refreshToken = request.cookies.get('refreshToken')?.value;
   const tokenValid = await checkToken(accessToken);
   if (!tokenValid && !!refreshToken) {
-    const res = await fetch('http://localhost:3000/api/auth/refresh', {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/auth/refresh`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ refreshToken }),
@@ -40,7 +40,7 @@ export const config = {
 async function checkToken(accessToken?: string) {
   if (!accessToken) return false;
   try {
-    const res = await fetch('http://localhost:8080/api/auth/check-token', {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/auth/check-token`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${accessToken}`

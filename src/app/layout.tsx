@@ -30,7 +30,7 @@ export default async function RootLayout({
   const cookieStore = await cookies();
 
   let isAuthenticated = false;
-  const result = await fetch('http://localhost:3000/api/user/me', {
+  const result = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/user/me`, {
     method: "GET",
     next: { revalidate: 60 },
     headers: {

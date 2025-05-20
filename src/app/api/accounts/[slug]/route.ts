@@ -5,7 +5,7 @@ export async function GET(
   { params }: { params: Promise<{ slug: string }> }) {
   try {
     const { slug } = await params;
-    const res = await fetch(`http://localhost:8080/api/accounts/u/${slug}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/accounts/u/${slug}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'

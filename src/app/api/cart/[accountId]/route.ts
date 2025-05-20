@@ -7,7 +7,7 @@ export async function DELETE(
   try {
     const token = req.cookies.get("token")?.value;
     const { accountId } = await params;
-    const res = await fetch(`http://localhost:8080/api/cart/remove/${accountId}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/cart/remove/${accountId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`,

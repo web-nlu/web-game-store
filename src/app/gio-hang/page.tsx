@@ -6,10 +6,12 @@ import {formatPrice} from "@/utils";
 import {CreditCard, Trash2} from "lucide-react";
 import CartItem from "@/components/cart/cartItem";
 import _ from "lodash";
+import {useRouter} from "next/navigation";
 
 export default function CartPage() {
   const [cartItems, setCartItems] = useState([] as CartItem[]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const router = useRouter();
   useEffect(() => {
     loadCart();
   }, [])
@@ -43,6 +45,11 @@ export default function CartPage() {
   const calculateTotal = () => {
     return totalPrice + calculateServiceFee();
   };
+
+  const checkout = () => {
+    router.push("/thanh-toan");
+  }
+
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="container mx-auto px-4 py-8">
@@ -106,6 +113,7 @@ export default function CartPage() {
 
                 <div className="mt-8">
                   <button
+                    onClick={checkout}
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg transition flex items-center justify-center">
                     <CreditCard size={20} className="mr-2"/>
                     <span>Tiến hành thanh toán</span>

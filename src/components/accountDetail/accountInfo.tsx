@@ -11,15 +11,9 @@ import {formatPrice} from "@/utils";
 import React from "react";
 import AccountFeature from "@/components/accountDetail/accountFeature";
 import ServiceCommitment from "@/components/accountDetail/serviceCommitment";
-import AmountForm from "@/components/common/amountForm";
 import Button from "@/components/common/button";
 
 export default function AccountInfo(accountDetail: AccountDetail) {
-  let amount = 1;
-
-  const onChangeAmount = (newAmount: number) => {
-    amount = newAmount;
-  }
 
   const addToCart = async () => {
     const addToCartResponse = await fetch("/api/cart", {
@@ -77,8 +71,6 @@ export default function AccountInfo(accountDetail: AccountDetail) {
           <AccountFeature title={"Level:"} value={accountDetail.level.toString()} />
           <AccountFeature title={"Trạng thái:"} value={accountDetail.status === 'available' ? 'Còn hàng' : 'Hết hàng'}/>
         </div>
-
-        <AmountForm amount={amount} setAmount={onChangeAmount} />
 
         <div className="space-y-3">
           {
