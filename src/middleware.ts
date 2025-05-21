@@ -22,6 +22,7 @@ export async function middleware(request: NextRequest) {
         secure: process.env.NODE_ENV === 'production',
       });
 
+      response.cookies.delete('refreshToken')
       return response;
     } else {
       return NextResponse.next();
@@ -40,7 +41,7 @@ export const config = {
 async function checkToken(accessToken?: string) {
   if (!accessToken) return false;
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/auth/check-token`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/auth/check-token`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${accessToken}`

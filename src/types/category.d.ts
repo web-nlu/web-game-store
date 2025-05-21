@@ -3,3 +3,8 @@ type Category = {
   name: string
   icon: string
 }
+
+type Game = {
+  id: number,
+  name: string
+}

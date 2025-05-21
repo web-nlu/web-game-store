@@ -7,12 +7,12 @@ type Props = {
 
 export default function CategoryFilter({categories, selectedCategory}: Props) {
 
-  const setSelectedCategory = async (category: string) => {
-    if(category == "0") {
+  const setSelectedCategory = async (categoryId: string) => {
+    if(categoryId == "0") {
       window.location.href = "/san-pham"
       return
     }
-    window.location.href = `/san-pham?${new URLSearchParams({category})}`
+    window.location.href = `/san-pham?${new URLSearchParams({categoryId})}`
   }
 
   return (
