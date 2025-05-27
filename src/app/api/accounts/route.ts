@@ -19,12 +19,10 @@ export async function GET(req: NextRequest) {
           }
         }
       )
-      if(!res.ok) return new NextResponse(JSON.stringify({ }), { status: res.status });
-      const {data} = await res.json();
+      const {data, message} = await res.json();
 
-      return new NextResponse(JSON.stringify({ ...data }), {status: 200});
+      return new NextResponse(JSON.stringify({ accounts: data.content ?? [], message }), {status: res.status});
     } catch (error) {
-      console.log(error);
-      return new NextResponse(JSON.stringify({ }), { status: 500 });
+      return new NextResponse(JSON.stringify({ accounts: [], message: (error as Error).message }), { status: 500 });
     }
 }

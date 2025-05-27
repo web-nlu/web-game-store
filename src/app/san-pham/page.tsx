@@ -37,7 +37,7 @@ export default async function AccountsPage({searchParams}: {searchParams: Search
     }),
   ]);
   const { categories } = (await requestCategories.json());
-  const { content: accounts } = (await requestAccounts.json());
+  const { accounts } = (await requestAccounts.json());
   let games = []
   if(categoryId) {
 

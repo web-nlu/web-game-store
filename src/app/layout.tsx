@@ -29,7 +29,6 @@ export default async function RootLayout({
 
   const cookieStore = await cookies();
 
-  let isAuthenticated = false;
   const result = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/user/me`, {
     method: "GET",
     next: { revalidate: 60 },
@@ -37,9 +36,8 @@ export default async function RootLayout({
       'Authorization': `Bearer ${cookieStore.get('token')?.value}`
     }
   })
-  isAuthenticated = result.status === 200;
   let user;
-  if(isAuthenticated) {
+  if(result.ok) {
     const data = await result.json();
     user = data.user;
   }
@@ -54,7 +52,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header isAuthenticated={isAuthenticated}  user={user}/>
+        <Header user={user}/>
         {children}
       </body>
     </html>

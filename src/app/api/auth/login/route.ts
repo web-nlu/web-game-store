@@ -16,11 +16,11 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ accessToken, refreshToken });
     }
     return new NextResponse(
-      JSON.stringify({ success: false, message: "Sai email hặc mật khẩu!" }),
+      JSON.stringify({ message: "Sai email hặc mật khẩu!" }),
       { status: 400 }
     )
 
   } catch (error) {
-    return new NextResponse(JSON.stringify({success: false, message: 'Lỗi kết nối đến server.' }), { status: 500 });
+    return new NextResponse(JSON.stringify({message: 'Lỗi kết nối đến server.' }), { status: 500 });
   }
 }

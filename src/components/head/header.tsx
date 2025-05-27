@@ -1,15 +1,21 @@
 "use client"
 import Link from "next/link";
-import {useState} from "react";
+import {use, useEffect, useState} from "react";
 import Image from "next/image";
+import {useUserStore} from "@/service/user/userService";
 
 type Props = {
-  isAuthenticated: boolean;
   user?: UserInfo
 }
 
-export default function Header({isAuthenticated, user}: Props) {
+export default function Header({user}: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const {setUser} = useUserStore()
+  useEffect(() => {
+    if(user) {
+      setUser(user)
+    }
+  }, [user])
   return (
     <header className="bg-gradient-to-r from-blue-700 to-indigo-900 text-white shadow-lg">
       <div className="container mx-auto px-4 py-3">
@@ -52,7 +58,7 @@ export default function Header({isAuthenticated, user}: Props) {
                 className="absolute -top-2 -right-2 bg-red-500 text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
             </Link>
             {
-              !isAuthenticated ?
+              !user ?
                 (<Link href="/dang-nhap" className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md font-medium">
                   Đăng nhập
                 </Link>)

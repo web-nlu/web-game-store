@@ -14,10 +14,11 @@ export async function DELETE(
         'Content-Type': 'application/json'
       },
     })
-    if(!res.ok) return new NextResponse(JSON.stringify({ success: false }), { status: res.status });
-    return new NextResponse(JSON.stringify({ success: true }), {status: 200});
+
+    const {message} = await res.json();
+    return new NextResponse(JSON.stringify({ message }), {status: res.status});
   } catch (error) {
     console.log(error);
-    return new NextResponse(JSON.stringify({ success: false }), { status: 500 });
+    return new NextResponse(JSON.stringify({ message: 'Lỗi kết nối đến server.' }), { status: 500 });
   }
 }

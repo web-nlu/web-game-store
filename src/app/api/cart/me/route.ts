@@ -10,10 +10,9 @@ export async function GET(req: NextRequest) {
         'Content-Type': 'application/json'
       }
     })
-    if(!res.ok) return new NextResponse(JSON.stringify({ success: false }), { status: res.status });
     const {data} = await res.json();
-    return new NextResponse(JSON.stringify({ success: true, ...data }), {status: 200});
+    return new NextResponse(JSON.stringify({ ...data }), {status: res.status});
   } catch (error) {
-    return new NextResponse(JSON.stringify({ success: false }), { status: 500 });
+    return new NextResponse(JSON.stringify({ message: 'Lỗi kết nối đến server.' }), { status: 500 });
   }
 }

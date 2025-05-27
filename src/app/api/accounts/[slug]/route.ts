@@ -11,11 +11,10 @@ export async function GET(
         'Content-Type': 'application/json'
       }
     })
-    if(!res.ok) return new NextResponse(JSON.stringify({ account: null }), { status: res.status });
-    const {data} = await res.json();
+    const {data, message} = await res.json();
 
-    return new NextResponse(JSON.stringify({ account: data }), {status: 200});
+    return new NextResponse(JSON.stringify({ account: data, message }), {status: res.status});
   } catch (error) {
-    return new NextResponse(JSON.stringify({ account: null }), { status: 500 });
+    return new NextResponse(JSON.stringify({ account: null,  message: 'Lỗi kết nối đến server.' }), { status: 500 });
   }
 }

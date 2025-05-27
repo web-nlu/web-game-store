@@ -8,10 +8,9 @@ export async function GET(req: NextRequest) {
         'Content-Type': 'application/json'
       }
     })
-    if(!res.ok) return new NextResponse(JSON.stringify({ categories: [] }), { status: res.status });
-    const {data} = await res.json();
-    return new NextResponse(JSON.stringify({ categories: data }), {status: 200});
+    const {data, message} = await res.json();
+    return new NextResponse(JSON.stringify({ categories: data ?? [], message }), {status: res.status});
   } catch (error) {
-    return new NextResponse(JSON.stringify({ categories: [] }), { status: 500 });
+    return new NextResponse(JSON.stringify({ categories: [], message: 'Lỗi kết nối đến server.' }), { status: 500 });
   }
 }
