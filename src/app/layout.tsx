@@ -41,10 +41,7 @@ export default async function RootLayout({
   let user;
   if(isAuthenticated) {
     const data = await result.json();
-    user = {
-      id: data.id,
-      email: data.email,
-    }
+    user = data.user;
   }
 
   return (

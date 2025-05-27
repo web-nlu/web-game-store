@@ -11,8 +11,8 @@ export async function GET(req: NextRequest) {
       }
     })
     if(!res.ok) return new NextResponse(JSON.stringify({ success: false }), { status: res.status });
-    const data = await res.json();
-    return new NextResponse(JSON.stringify({ success: true, ...data }), {status: 200});
+    const {data} = await res.json();
+    return new NextResponse(JSON.stringify({ success: true, user: data }), {status: 200});
   } catch (error) {
     console.log(error);
     return new NextResponse(JSON.stringify({ success: false }), { status: 500 });
