@@ -31,7 +31,7 @@ export default function LazyLoadingList({availableAccounts} : Props) {
       );
       const {content: accounts, totalPages} = await res.json();
 
-      if (accounts.length === 0 || page >= totalPages) {
+      if (!accounts?.length || page >= totalPages) {
         setHasMore(false);
         return;
       }

@@ -10,7 +10,6 @@ export default function ReviewForm() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     alert(`Đã gửi đánh giá: ${rating} sao, Nội dung: ${comment}`);
-    // Xử lý gửi đánh giá đến server tại đây
     setComment('');
   };
 

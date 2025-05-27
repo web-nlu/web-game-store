@@ -7,9 +7,9 @@ type UserInfo = {
   avatar: string,
   activeRoles: [
     {
-      id: 2,
-      name: 'ADMIN',
-      deleted: false
+      id: number,
+      name: string,
+      deleted: boolean
     }
   ]
 }

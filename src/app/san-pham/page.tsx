@@ -38,9 +38,16 @@ export default async function AccountsPage({searchParams}: {searchParams: Search
   ]);
   const { categories } = (await requestCategories.json());
   const { accounts } = (await requestAccounts.json());
+  console.log(categories);
   let games = []
   if(categoryId) {
-
+    const gameRequest = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/games/${categoryId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+    games = (await gameRequest.json()).games;
   }
 
   return (
@@ -61,7 +68,7 @@ export default async function AccountsPage({searchParams}: {searchParams: Search
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Lọc theo tên trò chơi */}
-            <GameFilter games={[]} />
+            <GameFilter games={games} />
 
             {/* Sắp xếp */}
             <SortAccounts />
