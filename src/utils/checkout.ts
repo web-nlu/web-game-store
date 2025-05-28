@@ -1,6 +1,6 @@
-const checkout = async () => {
+export const checkout = async () => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/order`,
+    `${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/s/order`,
     {method: "POST"}
   );
 
@@ -8,13 +8,33 @@ const checkout = async () => {
 
   if (!response.ok) {
     console.error(message);
-    return;
+    return false;
   }
 
 
   window.location.href = `/thanh-toan?${new URLSearchParams({
     orderCode: order.id.toString(), totalPrice: order.totalPrice.toString()
   })}`
+  return true;
 }
 
-export default checkout;
+export const cancel = async (id: string) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/s/order/cancel/${id}`,
+    {method: "PUT"}
+  );
+
+  const {order, message} = await response.json();
+
+  if (!response.ok) {
+    console.error(message);
+    return false;
+  }
+  setTimeout(( ) => {
+    window.location.href = `/thanh-toan?${new URLSearchParams({
+      orderCode: order.id.toString(), totalPrice: order.totalPrice.toString()
+    })}`
+  }, 30000)
+
+  return true;
+}

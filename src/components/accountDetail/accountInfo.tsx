@@ -16,7 +16,7 @@ import Button from "@/components/common/button";
 export default function AccountInfo(accountDetail: AccountDetail) {
 
   const addToCart = async () => {
-    const addToCartResponse = await fetch("/api/cart", {
+    const addToCartResponse = await fetch("/api/s/cart", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',

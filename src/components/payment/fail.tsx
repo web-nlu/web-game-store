@@ -1,7 +1,7 @@
 'use client'
 import Link from "next/link";
 import {XCircle} from "lucide-react";
-import checkout from "@/utils/checkout";
+import {checkout} from "@/utils/checkout";
 import {JSX} from "react";
 
 type Props = {

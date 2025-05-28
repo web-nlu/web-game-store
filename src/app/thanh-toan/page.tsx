@@ -5,6 +5,7 @@ import Success from "@/components/payment/success";
 import Fail from "@/components/payment/fail";
 import Loading from "@/components/payment/loading";
 import {ReadonlyURLSearchParams, useSearchParams} from "next/navigation";
+import {cancel} from "@/utils/checkout";
 
 type Props = {
   params: ReadonlyURLSearchParams
@@ -19,11 +20,13 @@ const ProductDisplay = ({ params }: Props) => {
     RETURN_URL: process.env.NEXT_PUBLIC_FRONTEND_HOST,
     ELEMENT_ID: "embedded-payment-container",
     embedded: false,
-    onSuccess: (event) => {
+    onSuccess: (event: EventPayos) => {
+      setCheckout(event);
       setSuccess(true);
       setInProgress(false);
     },
     onCancel: (event: EventPayos) => {
+      cancel(event.orderCode.toString());
       setCheckout(event);
       setSuccess(false);
       setInProgress(false);
@@ -75,7 +78,7 @@ const ProductDisplay = ({ params }: Props) => {
     <>
       {loading && <Loading />}
       {!inProgress && !success && <Fail data={checkout} />}
-      {(!inProgress && success) && <Success/>}
+      {(!inProgress && success) && <Success data={checkout}/>}
       {(inProgress) && <div className="w-full">
           <div id="embedded-payment-container" className="h-[350px]"></div>
       </div>

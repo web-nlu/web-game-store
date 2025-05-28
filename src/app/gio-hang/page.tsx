@@ -6,8 +6,7 @@ import {formatPrice} from "@/utils";
 import {CreditCard, Trash2} from "lucide-react";
 import CartItem from "@/components/cart/cartItem";
 import _ from "lodash";
-import checkout from "@/utils/checkout";
-import {BlinkBlur} from "react-loading-indicators";
+import {checkout} from "@/utils/checkout";
 import CommonLoading from "@/components/common/commonLoading";
 
 export default function CartPage() {
@@ -20,7 +19,7 @@ export default function CartPage() {
 
   const onCheckout = () => {
     setLoading(true);
-    checkout().then(() => setLoading(false));
+    checkout().then((result) => setLoading(result));
   }
 
   const onRemove = (index: number) => {
@@ -30,14 +29,14 @@ export default function CartPage() {
   }
 
   const removeAll = async () => {
-    const removeResponse = await fetch(`/api/cart/removeAll`,  {method: "DELETE"})
+    const removeResponse = await fetch(`/api/s/cart/removeAll`,  {method: "DELETE"})
     if (removeResponse.ok) {
       setCartItems([])
     }
   }
 
   const loadCart = async () => {
-    const cartResponse = await fetch("/api/cart/me")
+    const cartResponse = await fetch("/api/s/cart/me")
     const {accounts, totalPrice} = await cartResponse.json()
     setCartItems(accounts || []);
     setTotalPrice(totalPrice);

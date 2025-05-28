@@ -12,6 +12,7 @@ export async function POST(req: NextRequest) {
     })
 
     const {data, message} = await res.json();
+
     return new NextResponse(JSON.stringify({ order: data, message }), {status: res.status});
   } catch (e) {
     console.error(e);

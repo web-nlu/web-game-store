@@ -21,8 +21,6 @@ export async function middleware(request: NextRequest) {
         sameSite: 'lax',
         secure: process.env.NODE_ENV === 'production',
       });
-
-      response.cookies.delete('refreshToken')
       return response;
     } else {
       return NextResponse.next();
@@ -34,7 +32,8 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!api|login|about|_next/static|_next/image|favicon.ico|$).*)',
+    '/((?!login|about|_next/static|_next/image|favicon.ico|$).*)',
+    '/api/s/(.*)',
   ],
 };
 

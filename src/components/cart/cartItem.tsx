@@ -11,7 +11,7 @@ type Props = {
 
 export default function CartItem({item, index, onRemove}: Props) {
   const remove = async () => {
-    const delResponse = await fetch(`/api/cart/${item.id}`, {method: "DELETE"})
+    const delResponse = await fetch(`/api/s/cart/${item.id}`, {method: "DELETE"})
     if (delResponse.ok) {
       onRemove(index);
     }
