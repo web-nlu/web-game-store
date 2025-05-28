@@ -12,7 +12,6 @@ type Props = {
 export default function Header({user}: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const {setUser} = useUserStore()
-  const router  = useRouter();
   useEffect(() => {
     if(user) {
       setUser(user)

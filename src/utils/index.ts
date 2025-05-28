@@ -18,3 +18,8 @@ export function formatVietnamTime(epochSeconds: number): string {
 
   return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
+
+export function getCookie(name: string, cookie: string): string | null {
+  const match = cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return match ? match[2] : null;
+}

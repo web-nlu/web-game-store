@@ -14,6 +14,7 @@ export async function middleware(request: NextRequest) {
     if (res.ok) {
       const {accessToken} = await res.json();
       const response = NextResponse.next();
+
       response.cookies.set('token', accessToken, {
         httpOnly: true,
         path: '/',
@@ -33,7 +34,7 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     '/((?!login|about|_next/static|_next/image|favicon.ico|$).*)',
-    '/api/s/(.*)',
+    '/api/s/cart',
   ],
 };
 
