@@ -1,5 +1,4 @@
 'use client'
-import Link from "next/link";
 import {formatPrice} from "@/utils";
 
 export default function CardAccount({account} : {account: Account}) {
@@ -20,17 +19,17 @@ export default function CardAccount({account} : {account: Account}) {
       </div>
 
       <div className="p-4">
-        <Link href={`/${account.id}`}>
+        <a href={`/${account.id}`} >
           <h3 className="font-bold text-lg mb-2 hover:text-blue-600 transition">{account.title}</h3>
-        </Link>
+        </a>
         <p className="text-gray-600 text-sm mb-3">{account.info}</p>
         <div className="flex justify-between items-center">
           <span className="font-bold text-red-600">{formatPrice(account.price)}</span>
-          <Link href={`/${account.id}`}>
+          <a href={`/${account.id}`}>
                       <span className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 transition text-sm">
                         Chi tiết
                       </span>
-          </Link>
+          </a>
         </div>
       </div>
     </div>

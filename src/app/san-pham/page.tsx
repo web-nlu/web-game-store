@@ -38,7 +38,6 @@ export default async function AccountsPage({searchParams}: {searchParams: Search
   ]);
   const { categories } = (await requestCategories.json());
   const { accounts } = (await requestAccounts.json());
-  console.log(categories);
   let games = []
   if(categoryId) {
     const gameRequest = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/games/${categoryId}`, {

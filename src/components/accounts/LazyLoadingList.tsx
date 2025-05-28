@@ -15,7 +15,6 @@ export default function LazyLoadingList({availableAccounts} : Props) {
   const [accounts, setAccounts] = useState(availableAccounts);
   const [page, setPage] = useState(1);
   useEffect(() => {
-    console.log(params.toString());
     if(page === 1) return;
     const fetchData = async () => {
       const searchParams = new URLSearchParams(params.toString());

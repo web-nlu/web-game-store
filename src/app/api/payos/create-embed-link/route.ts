@@ -1,7 +1,7 @@
 import PayOS from "@payos/node";
-import {NextResponse} from "next/server";
+import {NextRequest, NextResponse} from "next/server";
 
-export async function POST() {
+export async function POST(req: NextRequest) {
   const payOS = new PayOS(
     "796482f0-657c-4278-abe3-d415661098f4",
     "42ff7c76-55d6-4215-b756-34f042c79dd1",
@@ -9,10 +9,9 @@ export async function POST() {
   );
 
   const YOUR_DOMAIN = process.env.NEXT_PUBLIC_FRONTEND_HOST;
+  const reqBody = await req.json();
   const body = {
-    orderCode: Number(String(Date.now()).slice(-6)),
-    amount: 10000,
-    description: "Thanh toan don hang",
+    ...reqBody,
     returnUrl: `${YOUR_DOMAIN}`,
     cancelUrl: `${YOUR_DOMAIN}`,
   }

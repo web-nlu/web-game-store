@@ -41,7 +41,7 @@ export const config = {
 async function checkToken(accessToken?: string) {
   if (!accessToken) return false;
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/auth/check-token`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/auth/u/check-token`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${accessToken}`

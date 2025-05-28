@@ -1,8 +1,9 @@
-"use client"
+'use client'
 import Link from "next/link";
-import {use, useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import {useUserStore} from "@/service/user/userService";
+import {useRouter} from "next/navigation";
 
 type Props = {
   user?: UserInfo
@@ -11,6 +12,7 @@ type Props = {
 export default function Header({user}: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const {setUser} = useUserStore()
+  const router  = useRouter();
   useEffect(() => {
     if(user) {
       setUser(user)

@@ -1,13 +1,20 @@
 'use client'
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, JSX} from "react";
 import {PayOSConfig, usePayOS} from "@payos/payos-checkout";
 import Success from "@/components/payment/success";
 import Fail from "@/components/payment/fail";
 import Loading from "@/components/payment/loading";
-const ProductDisplay = () => {
+import {ReadonlyURLSearchParams, useSearchParams} from "next/navigation";
+
+type Props = {
+  params: ReadonlyURLSearchParams
+}
+
+const ProductDisplay = ({ params }: Props) => {
   const [success, setSuccess] = useState(false);
   const [inProgress, setInProgress] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [checkout, setCheckout] = useState({} as EventPayos);
   const [payOSConfig, setPayOSConfig] = useState({
     RETURN_URL: process.env.NEXT_PUBLIC_FRONTEND_HOST,
     ELEMENT_ID: "embedded-payment-container",
@@ -15,16 +22,14 @@ const ProductDisplay = () => {
     onSuccess: (event) => {
       setSuccess(true);
       setInProgress(false);
-      setLoading(true);
-      exit();
     },
-    onCancel: (event) => {
+    onCancel: (event: EventPayos) => {
+      setCheckout(event);
       setSuccess(false);
       setInProgress(false);
     },
-    onExit: (event) => {
-      setSuccess(false);
-      setInProgress(false);
+    onExit: (event: EventPayos) => {
+      window.location.href = "/gio-hang"
     }
   } as PayOSConfig);
 
@@ -34,10 +39,19 @@ const ProductDisplay = () => {
       `${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/payos/create-embed-link`,
       {
         method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          orderCode: parseInt(params.get("orderCode")!),
+          amount: parseFloat(params.get("totalPrice")!),
+          description: Number(String(Date.now()).slice(-6))
+        })
       }
     );
     if (!response.ok) {
-      console.log("Server doesn't response");
+      window.location.href = "/gio-hang";
+      return;
     }
 
     const result = await response.json();
@@ -48,18 +62,19 @@ const ProductDisplay = () => {
   }
 
   useEffect(() => {
+    setLoading(true)
     handleGetPaymentLink().then(() => setLoading(false));
   }, []);
 
   useEffect(() => {
-    if (payOSConfig.CHECKOUT_URL != null) {
+    if (payOSConfig.CHECKOUT_URL != null && !loading) {
       open();
     }
-  }, [payOSConfig]);
+  }, [payOSConfig, loading]);
   return (
     <>
       {loading && <Loading />}
-      {!inProgress && !success && <Fail />}
+      {!inProgress && !success && <Fail data={checkout} />}
       {(!inProgress && success) && <Success/>}
       {(inProgress) && <div className="w-full">
           <div id="embedded-payment-container" className="h-[350px]"></div>
@@ -69,6 +84,14 @@ const ProductDisplay = () => {
   );
 };
 
-export default function App() {
-  return <ProductDisplay/>;
+export default function App(): JSX.Element {
+  const params = useSearchParams();
+  useEffect(() => {
+    if(!params.get("orderCode") || !params.get("totalPrice")) {
+      window.location.href = "/"
+      return;
+    }
+  }, []);
+
+  return <ProductDisplay params={params} />;
 }

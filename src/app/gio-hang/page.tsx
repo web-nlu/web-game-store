@@ -6,15 +6,22 @@ import {formatPrice} from "@/utils";
 import {CreditCard, Trash2} from "lucide-react";
 import CartItem from "@/components/cart/cartItem";
 import _ from "lodash";
-import {useRouter} from "next/navigation";
+import checkout from "@/utils/checkout";
+import {BlinkBlur} from "react-loading-indicators";
+import CommonLoading from "@/components/common/commonLoading";
 
 export default function CartPage() {
   const [cartItems, setCartItems] = useState([] as CartItem[]);
   const [totalPrice, setTotalPrice] = useState(0);
-  const router = useRouter();
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    loadCart();
+    loadCart().then(() => setLoading(false));
   }, [])
+
+  const onCheckout = () => {
+    setLoading(true);
+    checkout().then(() => setLoading(false));
+  }
 
   const onRemove = (index: number) => {
     const newItems = _.cloneDeep(cartItems);
@@ -32,7 +39,7 @@ export default function CartPage() {
   const loadCart = async () => {
     const cartResponse = await fetch("/api/cart/me")
     const {accounts, totalPrice} = await cartResponse.json()
-    setCartItems(accounts);
+    setCartItems(accounts || []);
     setTotalPrice(totalPrice);
   }
 
@@ -46,11 +53,7 @@ export default function CartPage() {
     return totalPrice + calculateServiceFee();
   };
 
-  const checkout = () => {
-    router.push("/thanh-toan");
-  }
-
-  return (
+  return loading ? <CommonLoading /> : (
     <div className="min-h-screen bg-gray-100">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-6">
@@ -113,7 +116,7 @@ export default function CartPage() {
 
                 <div className="mt-8">
                   <button
-                    onClick={checkout}
+                    onClick={onCheckout}
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg transition flex items-center justify-center">
                     <CreditCard size={20} className="mr-2"/>
                     <span>Tiến hành thanh toán</span>
@@ -123,10 +126,10 @@ export default function CartPage() {
                 <div className="mt-6">
                   <h3 className="font-medium mb-2">Chúng tôi chấp nhận</h3>
                   <div className="flex space-x-2">
-                    <div className="bg-gray-200 rounded px-3 py-1 text-sm">VISA</div>
-                    <div className="bg-gray-200 rounded px-3 py-1 text-sm">MasterCard</div>
-                    <div className="bg-gray-200 rounded px-3 py-1 text-sm">Momo</div>
-                    <div className="bg-gray-200 rounded px-3 py-1 text-sm">VNPay</div>
+                    <div className="bg-gray-200 rounded px-3 py-1 text-sm">Bank</div>
+                    {/*<div className="bg-gray-200 rounded px-3 py-1 text-sm">MasterCard</div>*/}
+                    {/*<div className="bg-gray-200 rounded px-3 py-1 text-sm">Momo</div>*/}
+                    {/*<div className="bg-gray-200 rounded px-3 py-1 text-sm">VNPay</div>*/}
                   </div>
                 </div>
               </div>
