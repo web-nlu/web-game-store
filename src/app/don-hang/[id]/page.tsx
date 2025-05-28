@@ -1,10 +1,12 @@
 'use client'
 import {formatPrice, formatVietnamTime} from "@/utils";
-import {Calendar, CheckCircle, Clock, CreditCard, Package, XCircle} from "lucide-react";
+import {Calendar, CreditCard, Package} from "lucide-react";
 import {useEffect, useState} from "react";
 import {useParams} from "next/navigation";
 import CommonLoading from "@/components/common/commonLoading";
 import _ from "lodash";
+import {getStatusColor, getStatusText} from "@/utils/checkout";
+import {getStatusIcon} from "@/components/payment/getStatusIcon";
 
 export default function OrderPage() {
   const [loading, setLoading] = useState(true);
@@ -33,44 +35,6 @@ export default function OrderPage() {
     }
     return order;
   }
-
-  const getStatusText = (status: string) => {
-    switch (status.toLowerCase()) {
-      case 'completed':
-        return 'Hoàn thành';
-      case 'pending':
-        return 'Đang xử lý';
-      case 'cancelled':
-        return 'Đã hủy';
-      default:
-        return status;
-    }
-  };
-  const getStatusColor = (status: string) => {
-    switch (status.toLowerCase()) {
-      case 'completed':
-        return 'bg-green-100 text-green-800 border-green-200';
-      case 'pending':
-        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'cancelled':
-        return 'bg-red-100 text-red-800 border-red-200';
-      default:
-        return 'bg-gray-100 text-gray-800 border-gray-200';
-    }
-  };
-
-  const getStatusIcon = (status: string) => {
-    switch (status.toLowerCase()) {
-      case 'completed':
-        return <CheckCircle className="w-4 h-4" />;
-      case 'pending':
-        return <Clock className="w-4 h-4" />;
-      case 'cancelled':
-        return <XCircle className="w-4 h-4" />;
-      default:
-        return <Clock className="w-4 h-4" />;
-    }
-  };
 
   return loading ? <CommonLoading /> : (
     <div className="min-h-screen bg-gray-50">

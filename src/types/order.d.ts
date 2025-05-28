@@ -6,6 +6,9 @@ type Order = {
   paymentLinkId: string;
   createdAt: number;
   updatedAt: number;
+  userId: number
+  phoneNumber: string
+  email: string
   orderDetails: OrderDetail[];
 }
 
