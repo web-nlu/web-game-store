@@ -2,54 +2,17 @@
 import React, {useEffect, useState} from "react";
 import {useInView} from "react-intersection-observer";
 import RowData from "@/components/order/rowData";
-import {useSearchParams} from "next/navigation";
 import {filterOrderStore} from "@/service/order/filterOrderService";
-import _ from "lodash";
+import {useOrderStore} from "@/service/order/orderService";
 
 export default function LazyLoadingTable() {
-  const [hasMore, setHasMore] = useState(true);
   const { ref, inView } = useInView();
-  const [orders, setOrders] = useState([] as Order[]);
-  const [page, setPage] = useState(1);
-  const [first, setFirst] = useState(true);
-  const {params} = filterOrderStore()
-
-  useEffect(() => {
-    setPage(1);
-    if(!first) {
-      fetchData(1).then((res) => {
-        setOrders(res)
-        setHasMore(res.length > 0)
-      });
-    }
-  }, [JSON.stringify(params)]);
-
-  useEffect(() => {
-    if (hasMore) {
-      fetchData().then((res) => {
-        setOrders((prev) => [...prev, ...res])
-        setHasMore(res.length > 0)
-        if(first) setFirst(false)
-      });
-    }
-  }, [page])
-
-  const fetchData = async (initPage?: number) => {
-    setHasMore(false);
-    const searchParams = new URLSearchParams({"page":(initPage || page).toString(), ...params});
-    const res = await fetch(`/api/s/order?${searchParams}`);
-    const { orders } = await res.json();
-
-    if (!orders?.length || !res.ok) {
-      return [];
-    }
-
-    return orders;
-  }
+  const {params, page, setPage} = filterOrderStore()
+  const {orders, hasMore, filterOrders} = useOrderStore();
 
   useEffect(() => {
     if (inView && hasMore) {
-      setPage((prev) => prev + 1);
+      filterOrders({...params, page: page.toString()}).then(() => setPage());
     }
   }, [inView, hasMore]);
 

@@ -2,9 +2,11 @@
 import {ChevronDown, Search} from "lucide-react";
 import {filterOrderStore} from "@/service/order/filterOrderService";
 import _ from "lodash";
+import {useOrderStore} from "@/service/order/orderService";
 
 export default function FilterOrder() {
   const {params, setParams} = filterOrderStore()
+  const {clearOrders} = useOrderStore();
   const onFilter = (key: string, value: string) => {
     if(_.isEmpty(value)) {
       delete params[key]
@@ -12,8 +14,8 @@ export default function FilterOrder() {
       params[key] = value;
     }
     setParams(_.cloneDeep(params));
+    clearOrders();
   }
-
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
