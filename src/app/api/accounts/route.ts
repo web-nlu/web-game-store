@@ -10,6 +10,7 @@ export async function GET(req: NextRequest) {
       if(!searchParams.get("size")) {
         searchParams.set("size", "30");
       }
+      searchParams.set("status", "available");
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_HOST}/api/accounts/u/filter-lazyloading?${searchParams}`,
         {

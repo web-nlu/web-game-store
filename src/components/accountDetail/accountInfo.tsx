@@ -53,16 +53,16 @@ export default function AccountInfo(accountDetail: AccountDetail) {
 
         <div className="mb-4">
           <div className="flex items-baseline">
-            <span className="text-3xl font-bold text-red-600">{formatPrice(accountDetail.salePrice)}</span>
-            {accountDetail.price > accountDetail.salePrice && (
+            <span className="text-3xl font-bold text-red-600">{formatPrice(accountDetail.salePrice || accountDetail.price)}</span>
+            {accountDetail.salePrice ? (
               <span className="ml-2 text-gray-500 line-through">{formatPrice(accountDetail.price)}</span>
-            )}
+            ) : <></>}
           </div>
-          {accountDetail.price > accountDetail.salePrice && (
+          {accountDetail.salePrice ? (
             <div className="mt-1 inline-block bg-red-100 text-red-800 text-xs px-2 py-1 rounded-md">
               Giảm {Math.round((accountDetail.price - accountDetail.salePrice) / accountDetail.price * 100)}%
             </div>
-          )}
+          ): <></>}
         </div>
 
         <div className="space-y-2 mb-6">

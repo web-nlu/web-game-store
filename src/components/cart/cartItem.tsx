@@ -1,7 +1,8 @@
 'use client'
 import {formatPrice} from "@/utils";
-import {Trash2} from "lucide-react";
+import {ImageIcon, Trash2} from "lucide-react";
 import React from "react";
+import {CldImage} from "next-cloudinary";
 
 type Props = {
   item: CartItem,
@@ -22,10 +23,13 @@ export default function CartItem({item, index, onRemove}: Props) {
       <div className="flex flex-col sm:flex-row items-start">
         {/* Hình ảnh sản phẩm */}
         <div className="bg-gray-200 rounded-lg w-full sm:w-24 h-24 flex items-center justify-center mb-4 sm:mb-0 flex-shrink-0">
-          <span className="text-4xl">
-            {item.game.includes('Liên Minh') ? '🎮' :
-              item.game.includes('Mobile Legends') ? '📱' : '🔫'}
-          </span>
+          { item.image ? (
+            <CldImage alt={"Hình ảnh tài khoản"} src={item.image} width={200} height={200} crop={"fill"} className="rounded-lg" />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center text-gray-500 rounded-lg">
+              <ImageIcon className="w-6 h-6 text-gray-400"/>
+            </div>
+          )}
         </div>
         {/* Thông tin sản phẩm */}
         <div className="ml-0 sm:ml-4 flex-grow">
@@ -35,7 +39,7 @@ export default function CartItem({item, index, onRemove}: Props) {
               <p className="text-sm text-blue-600">{item.game}</p>
             </div>
             <div className="mt-2 sm:mt-0 text-lg font-bold text-gray-900">
-              {formatPrice(item.price)}
+              {formatPrice(item.salePrice || item.price)}
             </div>
           </div>
 

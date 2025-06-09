@@ -1,22 +1,23 @@
 'use client'
 import {useState} from "react";
 import {ChevronLeftIcon, ChevronRightIcon} from "lucide-react";
+import {CldImage} from "next-cloudinary";
 
 type AccountSlideProps = {
-  imageGallery: string[]
+  imageGallery: ImageDetail[]
 }
 
-export default function AccountDetailSlide(props: AccountSlideProps) {
+export default function AccountDetailSlide({imageGallery}: AccountSlideProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const handlePrevImage = () => {
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? props.imageGallery.length - 1 : prevIndex - 1
+      prevIndex === 0 ? imageGallery.length - 1 : prevIndex - 1
     );
   };
 
   const handleNextImage = () => {
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === props.imageGallery.length - 1 ? 0 : prevIndex + 1
+      prevIndex === imageGallery.length - 1 ? 0 : prevIndex + 1
     );
   };
   return (
@@ -24,7 +25,7 @@ export default function AccountDetailSlide(props: AccountSlideProps) {
       <div className="relative h-96 w-full mb-4 rounded-md overflow-hidden">
         {/* Placeholder for actual image */}
         <div className="absolute inset-0 bg-gray-300 flex items-center justify-center">
-          <span className="text-gray-600">Hình ảnh tài khoản</span>
+          <CldImage alt={`Hình ảnh ${currentImageIndex}`} src={imageGallery[currentImageIndex].image} fill />
         </div>
 
         {/* Navigation buttons */}
@@ -43,15 +44,15 @@ export default function AccountDetailSlide(props: AccountSlideProps) {
       </div>
 
       <div className="flex space-x-2 overflow-x-auto pb-2">
-        {props.imageGallery.map((img, index) => (
+        {imageGallery.map((img, index) => (
           <div
-            key={index}
+            key={img.id}
             className={`h-20 w-20 flex-shrink-0 rounded overflow-hidden cursor-pointer border-2 ${currentImageIndex === index ? 'border-blue-600' : 'border-transparent'}`}
             onClick={() => setCurrentImageIndex(index)}
           >
-            <div className="h-full w-full bg-gray-300 flex items-center justify-center">
-              <span className="text-xs text-gray-600">Ảnh {index + 1}</span>
-            </div>
+            {/*<div className="h-full w-full bg-gray-300 flex items-center justify-center">*/}
+              <CldImage alt={`Hình ảnh ${index}`} src={img.image} width={200} height={200} crop={'fill'} />
+            {/*</div>*/}
           </div>
         ))}
       </div>
