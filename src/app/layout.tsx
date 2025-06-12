@@ -4,7 +4,11 @@ import "./globals.css";
 import React from "react";
 import Head from "next/head";
 import Header from "@/components/head/header";
-import {cookies} from "next/headers";
+import {cookies, headers} from "next/headers";
+import { AuthProvider } from "./providers";
+import {getServerSession} from "next-auth";
+import {authOptions} from "@/app/api/auth/[...nextauth]/route";
+import {redirect} from "next/navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,19 +32,28 @@ export default async function RootLayout({
 }>) {
 
   const cookieStore = await cookies();
-
-  const result = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/s/user/me`, {
-    method: "GET",
-    next: { revalidate: 60 },
-    headers: {
-      'Authorization': `Bearer ${cookieStore.get('token')?.value}`
-    }
-  })
+  const session = await getServerSession(authOptions)
+  const headersList = await headers();
+  const currentPathname = headersList.get("referer") || "";
   let user;
-  if(result.ok) {
-    const data = await result.json();
-    user = data.user;
+
+  if(currentPathname.indexOf("dang-nhap") < 0) {
+    const result = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/s/user/me`, {
+      method: "GET",
+      next: { revalidate: 60 },
+      headers: {
+        'Authorization': `Bearer ${cookieStore.get('token')?.value || session?.accessToken}`
+      }
+    })
+    if(result.ok) {
+      const data = await result.json();
+      user = data.user;
+    } else {
+      redirect('/dang-nhap');
+    }
   }
+
+
 
   return (
     <html lang="en">
@@ -53,7 +66,9 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Header user={user}/>
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

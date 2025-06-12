@@ -2,6 +2,9 @@
 import Link from "next/link";
 import React, {useState} from "react";
 import {loginAction} from "@/app/dang-nhap/action";
+import {signIn} from "next-auth/react";
+import {MailIcon} from "lucide-react";
+
 
 export default function LoginPage() {
   const [error, setError] = useState('')
@@ -37,9 +40,15 @@ export default function LoginPage() {
               className="mt-1 w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <button type="submit"
-                  className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
-          >Đăng nhập
+          <button type="submit" className="cursor-pointer w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
+            Đăng nhập
+          </button>
+          <button
+            onClick={() => signIn("google", {callbackUrl: "/"})}
+            className="cursor-pointer w-full bg-red-600 text-white flex flex-row justify-center items-center py-2 rounded-md hover:bg-red-700 transition"
+          >
+            <MailIcon className="w-4 h-4 mr-2" />
+            <p>Sign in with Google</p>
           </button>
         </form>
         <p className="mt-4 text-sm text-center">
