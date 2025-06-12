@@ -8,7 +8,6 @@ import {cookies, headers} from "next/headers";
 import { AuthProvider } from "./providers";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/app/api/auth/[...nextauth]/route";
-import {redirect} from "next/navigation";
 import {Toaster} from "react-hot-toast";
 
 const geistSans = Geist({
@@ -35,23 +34,17 @@ export default async function RootLayout({
   const cookieStore = await cookies();
   const session = await getServerSession(authOptions)
   const headersList = await headers();
-  const currentPathname = headersList.get("referer") || "";
   let user;
-
-  if(currentPathname.indexOf("dang-nhap") < 0) {
-    const result = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/s/user/me`, {
-      method: "GET",
-      next: { revalidate: 60 },
-      headers: {
-        'Authorization': `Bearer ${cookieStore.get('token')?.value || session?.accessToken}`
-      }
-    })
-    if(result.ok) {
-      const data = await result.json();
-      user = data.user;
-    } else {
-      redirect('/dang-nhap');
+  const result = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/s/user/me`, {
+    method: "GET",
+    next: { revalidate: 60 },
+    headers: {
+      'Authorization': `Bearer ${cookieStore.get('token')?.value || session?.accessToken}`
     }
+  })
+  if(result.ok) {
+    const data = await result.json();
+    user = data.user;
   }
 
 

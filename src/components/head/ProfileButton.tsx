@@ -5,12 +5,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {LogOut, Settings} from "lucide-react";
 import {useUserStore} from "@/service/user/userService";
+import toast from "react-hot-toast";
+import {signOut} from "next-auth/react";
 
 export default function ProfileButton() {
   const [isOpen, setIsOpen] = useState(false);
   const tooltipRef = useRef(null);
   const {user} = useUserStore();
-
   // Close tooltip when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -21,6 +22,27 @@ export default function ProfileButton() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const logout = async () => {
+    try {
+      const res = await fetch("/api/auth/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
+      const {message} = await res.json();
+      if(!res.ok) {
+        await signOut()
+      }
+      toast.success(message);
+      window.location.href = "/dang-nhap";
+    } catch (err) {
+       toast.error((err as Error).message);
+    } finally {
+      setIsOpen(false);
+    }
+  }
 
   return (
     <div className="relative">
@@ -66,7 +88,7 @@ export default function ProfileButton() {
           </Link>
           <div
             className="block flex flex-row gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-            onClick={() => setIsOpen(false)}
+            onClick={logout}
           >
             <LogOut color={"red"} size={18} />
             Đăng xuất
