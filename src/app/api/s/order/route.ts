@@ -35,7 +35,8 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const header = req.headers;
-    const token = req.cookies.get("token")?.value || getCookie("token", header.get("Set-Cookie") ?? "");
+    const session = await getServerSession(authOptions);
+    const token = req.cookies.get("token")?.value || getCookie("token", header.get("Set-Cookie") ?? "") || session?.accessToken;
     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/orders/create`, {
       method: 'POST',
       headers: {

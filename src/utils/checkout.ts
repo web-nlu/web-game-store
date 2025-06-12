@@ -1,4 +1,3 @@
-import {CheckCircle, Clock, XCircle} from "lucide-react";
 
 export const checkout = async () => {
   const response = await fetch(
@@ -26,18 +25,12 @@ export const cancel = async (id: string) => {
     {method: "PUT"}
   );
 
-  const {order, message} = await response.json();
+  const {message} = await response.json();
 
   if (!response.ok) {
     console.error(message);
     return false;
   }
-  setTimeout(( ) => {
-    window.location.href = `/thanh-toan?${new URLSearchParams({
-      orderCode: order.id.toString(), totalPrice: order.totalPrice.toString()
-    })}`
-  }, 30000)
-
   return true;
 }
 

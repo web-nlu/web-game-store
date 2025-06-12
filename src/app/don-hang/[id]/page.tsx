@@ -1,12 +1,13 @@
 'use client'
 import {formatPrice, formatVietnamTime} from "@/utils";
-import {Calendar, CreditCard, Package} from "lucide-react";
+import {Calendar, CircleXIcon, CreditCard, Package} from "lucide-react";
 import {useEffect, useState} from "react";
 import {useParams} from "next/navigation";
 import CommonLoading from "@/components/common/commonLoading";
 import _ from "lodash";
-import {getStatusColor, getStatusText} from "@/utils/checkout";
+import {cancel, checkout, getStatusColor, getStatusText} from "@/utils/checkout";
 import {getStatusIcon} from "@/components/payment/getStatusIcon";
+import Button from "@/components/common/button";
 
 export default function OrderPage() {
   const [loading, setLoading] = useState(true);
@@ -33,6 +34,7 @@ export default function OrderPage() {
       window.location.href = "/"
       return;
     }
+    console.log(order.status)
     return order;
   }
 
@@ -49,6 +51,20 @@ export default function OrderPage() {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 py-8">
+        {
+          (order.status.toLowerCase() === "pending") ? (
+            <div className="flex flex-wrap gap-3 mb-3">
+              <Button onClick={() => {
+                cancel(order.id.toString()).then((res) => {if(res) window.location.reload()})
+              }} label={"Huỷ"} icon={<CircleXIcon/>} className="text-red-500"/>
+              <Button onClick={() => {
+                window.location.href = `/thanh-toan?${new URLSearchParams({
+                  orderCode: order.id.toString(), totalPrice: order.totalPrice.toString()
+                })}`
+              }} label={"Thanh toán"} icon={<CreditCard/>} style={"filled"}/>
+            </div>
+          ) : <></>
+        }
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">

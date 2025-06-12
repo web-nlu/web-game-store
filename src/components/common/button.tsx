@@ -20,7 +20,7 @@ export default function Button(props: {
   return (
     <button
       onClick={props.onClick}
-      className={`flex-1 py-2 ${styles[props.style || "outline"]} cursor-pointer rounded-md flex items-center justify-center ${props.className}`}>
+      className={`flex-1 py-2 gap-2 ${styles[props.style || "outline"]} cursor-pointer rounded-md flex items-center justify-center ${props.className}`}>
       {props.icon}
       {props.label}
     </button>

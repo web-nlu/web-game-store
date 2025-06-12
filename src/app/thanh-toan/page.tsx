@@ -26,7 +26,7 @@ const ProductDisplay = ({ params }: Props) => {
       setInProgress(false);
     },
     onCancel: (event: EventPayos) => {
-      cancel(event.orderCode.toString());
+      cancel(params.get("orderCode")!);
       setCheckout(event);
       setSuccess(false);
       setInProgress(false);
@@ -36,7 +36,7 @@ const ProductDisplay = ({ params }: Props) => {
     }
   } as PayOSConfig);
 
-  const {open, exit} = usePayOS(payOSConfig);
+  const {open} = usePayOS(payOSConfig);
   async function handleGetPaymentLink(){
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/payos/create-embed-link`,
@@ -46,9 +46,9 @@ const ProductDisplay = ({ params }: Props) => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          orderCode: parseInt(params.get("orderCode")!),
+          orderCode: Number(String(Date.now()).slice(-6)),
           amount: parseFloat(params.get("totalPrice")!),
-          description: Number(String(Date.now()).slice(-6))
+          description: params.get("orderCode")!
         })
       }
     );

@@ -1,9 +1,8 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
-import {LogOut, Settings, User} from "lucide-react";
+import {CreditCard, LogOut, Settings, User} from "lucide-react";
 import {useUserStore} from "@/service/user/userService";
 import toast from "react-hot-toast";
 import {signOut} from "next-auth/react";
@@ -92,6 +91,14 @@ export default function ProfileButton() {
           >
             <Settings size={18} />
             Cài đặt
+          </Link>
+          <Link
+            href="/don-hang"
+            className="block flex flex-row gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            onClick={() => setIsOpen(false)}
+          >
+            <CreditCard size={18} />
+            Lịch sử mua hàng
           </Link>
           <div
             className="block flex flex-row gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

@@ -1,9 +1,13 @@
 'use client'
-import { Download, RefreshCw } from 'lucide-react';
+import { RefreshCw } from 'lucide-react';
 import LazyLoadingTable from "@/components/order/LazyLoadingTable";
 import FilterOrder from "@/components/order/filterOrder";
+import {filterOrderStore} from "@/service/order/filterOrderService";
+import {useOrderStore} from "@/service/order/orderService";
 
 export default function OrdersPage () {
+  const {clearParams} = filterOrderStore()
+  const {filterOrders} = useOrderStore();
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="bg-white shadow-sm border-b">
@@ -15,13 +19,10 @@ export default function OrdersPage () {
             </div>
             <div className="mt-4 sm:mt-0 flex space-x-3">
               <button
-                // onClick={exportOrders}
-                className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
-              >
-                <Download className="w-4 h-4 mr-2"/>
-                Xuất CSV
-              </button>
-              <button
+                onClick={() => {
+                  clearParams();
+                  filterOrders({});
+                }}
                 className="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors">
                 <RefreshCw className="w-4 h-4 mr-2"/>
                 Làm mới
