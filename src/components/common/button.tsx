@@ -14,10 +14,12 @@ export default function Button(props: {
   label: string,
   icon?: JSX.Element,
   style?: keyof Styles,
-  className?: string
+  className?: string,
+  onClick?: () => void
 }) {
   return (
     <button
+      onClick={props.onClick}
       className={`flex-1 py-2 ${styles[props.style || "outline"]} cursor-pointer rounded-md flex items-center justify-center ${props.className}`}>
       {props.icon}
       {props.label}

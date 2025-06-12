@@ -1,9 +1,8 @@
 'use client'
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import {useUserStore} from "@/service/user/userService";
-import {useRouter} from "next/navigation";
+import ProfileButton from "@/components/head/ProfileButton";
 
 type Props = {
   user?: UserInfo
@@ -63,15 +62,7 @@ export default function Header({user}: Props) {
                 (<Link href="/dang-nhap" className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md font-medium">
                   Đăng nhập
                 </Link>)
-               : (<Link href="/profile" className="flex items-center gap-2 group">
-                  <Image
-                    src={'/default-avatar.webp'}
-                    alt="avatar"
-                    width={40}
-                    height={40}
-                    className="rounded-full border-2 border-transparent group-hover:border-blue-500 transition"
-                  />
-                </Link>)
+               : (<ProfileButton />)
             }
             <button
               className="md:hidden"
