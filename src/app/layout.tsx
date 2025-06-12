@@ -4,7 +4,7 @@ import "./globals.css";
 import React from "react";
 import Head from "next/head";
 import Header from "@/components/head/header";
-import {cookies, headers} from "next/headers";
+import {cookies} from "next/headers";
 import { AuthProvider } from "./providers";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/app/api/auth/[...nextauth]/route";
@@ -33,7 +33,6 @@ export default async function RootLayout({
 
   const cookieStore = await cookies();
   const session = await getServerSession(authOptions)
-  const headersList = await headers();
   let user;
   const result = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/s/user/me`, {
     method: "GET",

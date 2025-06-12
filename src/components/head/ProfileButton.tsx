@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import {LogOut, Settings} from "lucide-react";
+import {LogOut, Settings, User} from "lucide-react";
 import {useUserStore} from "@/service/user/userService";
 import toast from "react-hot-toast";
 import {signOut} from "next-auth/react";
+import {CldImage} from "next-cloudinary";
 
 export default function ProfileButton() {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,8 +35,11 @@ export default function ProfileButton() {
       const {message} = await res.json();
       if(!res.ok) {
         await signOut()
+        toast.success("Đăng xuất thành công")
+      } else {
+        toast.success(message);
       }
-      toast.success(message);
+
       window.location.href = "/dang-nhap";
     } catch (err) {
        toast.error((err as Error).message);
@@ -48,30 +52,33 @@ export default function ProfileButton() {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 group focus:outline-none"
-      >
-        <Image
-          src="/default-avatar.webp"
-          alt="avatar"
-          width={40}
-          height={40}
-          className="rounded-full border-2 border-transparent group-hover:border-blue-500 transition"
-        />
+        className="flex items-center gap-2 group focus:outline-none cursor-pointer"
+      > {
+          user?.avatar ? (
+            <CldImage alt={"Avatar user"} src={user.avatar} width={40} height={40} className="rounded-full" />
+          ) : (
+            <div className="w-[40px] h-[40px] rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
+              <User className="w-[20px] h-[20px] text-blue-900"/>
+            </div>
+          )
+        }
       </button>
 
       {isOpen && (
         <div
-          ref={tooltipRef}
-          className="absolute w-70  right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 border border-gray-200"
+        ref={tooltipRef}
+        className="absolute w-70  right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 border border-gray-200"
         >
           <div className="flex items-center gap-2 px-4 py-2 border-b-1 border-solid border-gray-200">
-            <Image
-              src="/default-avatar.webp"
-              alt="avatar"
-              width={40}
-              height={40}
-              className="rounded-full border-2 border-transparent group-hover:border-blue-500 transition"
-            />
+            {
+              user?.avatar ? (
+                <CldImage alt={"Avatar user"} src={user.avatar} width={40} height={40} className="rounded-full" />
+              ) : (
+                <div className="w-[40px] h-[40px] rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
+                  <User className="w-[20px] h-[20px] text-blue-900"/>
+                </div>
+              )
+            }
             <div className="text-xs text-gray-900 overflow-wrap font-bold">
               <p className="wrap-anywhere">
                 {user?.email}

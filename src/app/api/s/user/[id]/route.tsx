@@ -1,9 +1,12 @@
 import {NextRequest, NextResponse} from "next/server";
+import {getServerSession} from "next-auth";
+import {authOptions} from "@/app/api/auth/[...nextauth]/route";
 
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
-    const token = req.cookies.get("token")?.value
+    const session = await getServerSession(authOptions);
+    const token = req.cookies.get("token")?.value || session?.accessToken
     const body = await req.json();
     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/user/${id}`, {
       method: 'PUT',
