@@ -58,10 +58,6 @@ export default function Fail({data}: Props): JSX.Element {
           </div>
 
           <div className="flex flex-col space-y-3 md:flex-row md:space-y-0 md:space-x-3">
-            <button onClick={checkout}
-                  className="bg-blue-600 text-white py-2 px-4 rounded-lg text-center font-medium hover:bg-blue-700 transition-colors w-full">
-              Thử lại
-            </button>
 
             <Link href="/support"
                   className="bg-gray-600 text-white py-2 px-4 rounded-lg text-center font-medium hover:bg-gray-700 transition-colors w-full">

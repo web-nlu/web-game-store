@@ -38,6 +38,9 @@ const ProductDisplay = ({ params }: Props) => {
 
   const {open} = usePayOS(payOSConfig);
   async function handleGetPaymentLink(){
+    if(!parseInt(params.get("orderCode") || "")) {
+      return;
+    }
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/payos/create-embed-link`,
       {
