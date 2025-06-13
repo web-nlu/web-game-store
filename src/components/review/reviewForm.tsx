@@ -1,16 +1,31 @@
 'use client'
 import {FormEvent, useState} from "react";
 import {StarIcon} from "lucide-react";
+import {useReviewStore} from "@/service/review/reviewService";
 
-export default function ReviewForm() {
-  const [rating, setRating] = useState(5);
-  const [comment, setComment] = useState('');
+type Props = {
+  accountId: string,
+}
+
+export default function ReviewForm({accountId}: Props) {
   const [hoveredStar, setHoveredStar] = useState(0);
+  const {createReview} = useReviewStore()
+  const [formData, setFormData] = useState({
+    rating: 1,
+    comment: "",
+    accountId,
+  } as BodySetReview)
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    alert(`Đã gửi đánh giá: ${rating} sao, Nội dung: ${comment}`);
-    setComment('');
+    const result = await createReview(formData)
+    if(result) {
+      setFormData({
+        rating: 1,
+        comment: "",
+        accountId,
+      })
+    }
   };
 
   return(
@@ -27,19 +42,19 @@ export default function ReviewForm() {
                 key={star}
                 type="button"
                 className="p-1"
-                onMouseEnter={() => setHoveredStar(star)}
+                onMouseEnter={() => setFormData((prev) => ({...prev, rating: star}))}
                 onMouseLeave={() => setHoveredStar(0)}
-                onClick={() => setRating(star)}
+                onClick={() => setFormData((prev) => ({...prev, rating: star}))}
               >
                 <StarIcon
                   size={24}
-                  fill={(hoveredStar || rating) >= star ? "#FBBF24" : "none"}
-                  stroke={(hoveredStar || rating) >= star ? "#FBBF24" : "#9CA3AF"}
+                  fill={(hoveredStar || formData.rating) >= star ? "#FBBF24" : "none"}
+                  stroke={(hoveredStar || formData.rating) >= star ? "#FBBF24" : "#9CA3AF"}
                 />
               </button>
             ))}
             <span className="ml-2 text-sm text-gray-600 self-center">
-              {rating} sao
+              {formData.rating} sao
             </span>
           </div>
         </div>
@@ -53,8 +68,10 @@ export default function ReviewForm() {
             rows={4}
             className="w-full border border-gray-300 rounded-md shadow-sm px-4 py-2 focus:ring-blue-500 focus:border-blue-500"
             placeholder="Chia sẻ trải nghiệm của bạn khi sử dụng tài khoản..."
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
+            value={formData.comment}
+            onChange={(e) =>
+              setFormData((prev) => ({...prev, comment: e.target.value}))
+            }
             required
           />
         </div>
@@ -66,9 +83,9 @@ export default function ReviewForm() {
           >
             Gửi đánh giá
           </button>
-          <p className="ml-4 text-xs text-gray-500">
-            Đánh giá của bạn sẽ được kiểm duyệt trước khi hiển thị
-          </p>
+          {/*<p className="ml-4 text-xs text-gray-500">*/}
+          {/*  Đánh giá của bạn sẽ được kiểm duyệt trước khi hiển thị*/}
+          {/*</p>*/}
         </div>
       </form>
     </div>

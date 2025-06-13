@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
       )
       const {data, message} = await res.json();
 
-      return new NextResponse(JSON.stringify({ accounts: data.content ?? [], message }), {status: res.status});
+      return new NextResponse(JSON.stringify({ accounts: data.content || [], message }), {status: res.status});
     } catch (error) {
       return new NextResponse(JSON.stringify({ accounts: [], message: (error as Error).message }), { status: 500 });
     }

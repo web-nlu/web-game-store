@@ -3,8 +3,16 @@ import {ReviewItem} from "@/components/review/reviewItem";
 import ReviewForm from "@/components/review/reviewForm";
 import {useUserStore} from "@/service/user/userService";
 import Link from "next/link";
+import {useEffect, useState} from "react";
+import {useReviewStore} from "@/service/review/reviewService";
 
-export default function ReviewLayout({reviews}: {reviews: Review[]}) {
+export default function ReviewLayout({ accountId, haveOrder}: {haveOrder: boolean, accountId: string}) {
+  const {filter, reviews} = useReviewStore()
+  // const [page, setPage] = useState(1);
+  useEffect(() => {
+    filter(accountId, {})
+  }, [accountId])
+
   const {user} = useUserStore()
 
   return (
@@ -24,7 +32,7 @@ export default function ReviewLayout({reviews}: {reviews: Review[]}) {
             </Link>
           </div>
         </div>
-      ) : <ReviewForm/>
+      ) : (haveOrder && <ReviewForm accountId={accountId}/>)
       }
       <div className="space-y-4">
         {reviews.map((review) => (

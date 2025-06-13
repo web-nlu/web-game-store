@@ -1,6 +1,6 @@
 'use client'
 import {useState} from "react";
-import {ChevronLeftIcon, ChevronRightIcon} from "lucide-react";
+import {ChevronLeftIcon, ChevronRightIcon, ImageIcon} from "lucide-react";
 import {CldImage} from "next-cloudinary";
 
 type AccountSlideProps = {
@@ -25,7 +25,11 @@ export default function AccountDetailSlide({imageGallery}: AccountSlideProps) {
       <div className="relative h-96 w-full mb-4 rounded-md overflow-hidden">
         {/* Placeholder for actual image */}
         <div className="absolute inset-0 bg-gray-300 flex items-center justify-center">
-          <CldImage alt={`Hình ảnh ${currentImageIndex}`} src={imageGallery[currentImageIndex].image} fill />
+          {
+            imageGallery[currentImageIndex] ? (
+              <CldImage alt={`Hình ảnh ${currentImageIndex}`} src={imageGallery[currentImageIndex].image} fill />
+            ) : <ImageIcon className="w-6 h-6 text-gray-400"/>
+          }
         </div>
 
         {/* Navigation buttons */}

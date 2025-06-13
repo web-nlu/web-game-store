@@ -1,7 +1,13 @@
 type Review = {
   id: number,
-  user: string,
+  email: string,
   rating: number,
   comment: string,
-  date: string
+  createdAt: number
+}
+
+type BodySetReview = {
+  rating: number,
+  comment: string,
+  accountId: string,
 }
