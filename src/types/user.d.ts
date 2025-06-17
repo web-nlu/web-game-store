@@ -5,6 +5,7 @@ type UserInfo = {
   phoneNumber?: string,
   address?: string,
   avatar?: string,
+  numOfCartItem: number
   activeRoles?: [
     {
       id: number,

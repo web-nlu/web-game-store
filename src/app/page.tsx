@@ -32,8 +32,6 @@ export default async function HomePage (){
         <GameCategories categories={categories} />
         <FeaturedAccount accounts={accounts} />
         <WhyChooseWe/>
-        <CustomerReview/>
-        <Subscribe/>
       </main>
       <Footer/>
     </>

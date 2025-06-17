@@ -10,12 +10,12 @@ import {CldImage} from "next-cloudinary";
 
 export default function ProfileButton() {
   const [isOpen, setIsOpen] = useState(false);
-  const tooltipRef = useRef(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
   const {user} = useUserStore();
   // Close tooltip when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (tooltipRef.current && !tooltipRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (tooltipRef.current && !tooltipRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };

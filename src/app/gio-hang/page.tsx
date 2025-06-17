@@ -26,6 +26,7 @@ export default function CartPage() {
     const newItems = _.cloneDeep(cartItems);
     newItems.splice(index, 1);
     setCartItems(newItems);
+    loadCart();
   }
 
   const removeAll = async () => {

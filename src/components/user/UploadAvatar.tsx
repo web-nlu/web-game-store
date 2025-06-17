@@ -24,7 +24,7 @@ export default function UploadAvatar({ image = "" }: Props) {
     <div className="flex flex-col gap-3 items-center space-x-4">
       <CldUploadWidget
         uploadPreset="pujjdcar"
-        options={{multiple: false}}
+        options={{multiple: false, folder: "avatars"}}
         onSuccess={(result, { widget }) => {
           setPublicId((result.info as CloudinaryUploadWidgetInfo ).public_id || "");
         }}

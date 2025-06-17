@@ -48,7 +48,7 @@ export default function LoginPage() {
             className="cursor-pointer w-full bg-red-600 text-white flex flex-row justify-center items-center py-2 rounded-md hover:bg-red-700 transition"
           >
             <MailIcon className="w-4 h-4 mr-2" />
-            <p>Sign in with Google</p>
+            <p>Đăng nhập bằng Google</p>
           </button>
         </form>
         <p className="mt-4 text-sm text-center">
