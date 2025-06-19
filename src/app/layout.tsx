@@ -51,7 +51,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <Head>
-        <title>Game Shop - Mua bán tài khoản game uy tín</title>
+        <title>GStore - Mua bán tài khoản game uy tín</title>
         <meta name="description" content="Mua bán tài khoản game uy tín, giá rẻ" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
