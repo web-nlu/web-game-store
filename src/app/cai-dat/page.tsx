@@ -66,7 +66,7 @@ export default function PersonalSettings() {
                   <div className="relative">
                     <div className="w-20 h-20 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500 flex items-center justify-center overflow-hidden">
                       {user?.avatar ? (
-                        <CldImage src={user?.avatar} alt="Avatar" width={120} height={120} />
+                        <CldImage src={user?.avatar} alt="Avatar" width={120} height={120} crop={"fill"} />
                       ) : (
                         <User className="w-10 h-10 text-white" />
                       )}

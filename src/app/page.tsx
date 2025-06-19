@@ -2,9 +2,8 @@ import HeroBanner from "@/components/homePage/heroBanner";
 import GameCategories from "@/components/homePage/gameCategories";
 import FeaturedAccount from "@/components/homePage/featuredAccount";
 import WhyChooseWe from "@/components/homePage/whyChooseWe";
-import CustomerReview from "@/components/homePage/customerReview";
-import Subscribe from "@/components/homePage/subscribe";
 import Footer from "@/components/footer/footer";
+import _ from "lodash";
 
 export default async function HomePage (){
   const [requestCategories, requestAccounts] = await Promise.all([
@@ -16,7 +15,7 @@ export default async function HomePage (){
       cache: 'force-cache',
       next: {revalidate: 60}
     }),
-    fetch(`${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/accounts?${new URLSearchParams({size: "5"})}`, {
+    fetch(`${process.env.NEXT_PUBLIC_FRONTEND_HOST}/api/home`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -24,13 +23,24 @@ export default async function HomePage (){
     }),
   ]);
   const { categories } = (await requestCategories.json());
-  const { accounts } = (await requestAccounts.json());
+  const { data } = (await requestAccounts.json());
   return (
     <>
       <main className="container mx-auto px-4 py-8">
         <HeroBanner/>
         <GameCategories categories={categories} />
-        <FeaturedAccount accounts={accounts} />
+        <FeaturedAccount accounts={(data as HomeData).newAccounts} />
+        {(data as HomeData).topAccountAllGames.map((wrappedData) => {
+          if (_.isEmpty(wrappedData)) {
+            return;
+          }
+          return <FeaturedAccount
+            key={wrappedData.gameId}
+            accounts={wrappedData.accounts}
+            title={`Tài khoản ${wrappedData.gameName}`}
+            direction={{categoryId: wrappedData.categoryId.toString(), gameId: wrappedData.gameId.toString()}}
+          />
+        })}
         <WhyChooseWe/>
       </main>
       <Footer/>

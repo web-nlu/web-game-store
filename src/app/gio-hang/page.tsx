@@ -45,7 +45,7 @@ export default function CartPage() {
 
   // Tính phí dịch vụ (giả sử 5% của tổng giá trị)
   const calculateServiceFee = () => {
-    return totalPrice * 0.05;
+    return totalPrice * 0;
   };
 
   // Tính tổng thanh toán
@@ -104,7 +104,7 @@ export default function CartPage() {
                   </div>
 
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Phí dịch vụ (5%)</span>
+                    <span className="text-gray-600">Phí dịch vụ (0%)</span>
                     <span className="font-medium">{formatPrice(calculateServiceFee())}</span>
                   </div>
 

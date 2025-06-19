@@ -7,14 +7,16 @@ import {ImageIcon} from "lucide-react";
 
 type Props = {
   accounts: Account[];
+  title?: string;
+  direction?: {[key: string]: string};
 }
 
-export default function FeaturedAccount({accounts}: Props): JSX.Element {
+export default function FeaturedAccount({accounts, title, direction}: Props): JSX.Element {
   return (
     <section className="mb-12">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">Tài khoản mới nhất</h2>
-        <Link href="/san-pham" className="text-blue-600 hover:text-blue-800 font-medium">
+        <h2 className="text-2xl font-bold text-gray-800">{title || "Tài khoản mới nhất"}</h2>
+        <Link href={`/san-pham?${new URLSearchParams(direction || {})}`} className="text-blue-600 hover:text-blue-800 font-medium">
           Xem tất cả
         </Link>
       </div>

@@ -45,7 +45,7 @@ export default function UploadAvatar({ image = "" }: Props) {
                 <div
                   className="w-32 h-32 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500 flex items-center justify-center overflow-hidden">
                   {publicId ? (
-                    <CldImage src={publicId} alt="Avatar" width={150} height={150} crop={"fit"}/>
+                    <CldImage src={publicId} alt="Avatar" width={150} height={150} crop={"fill"}/>
                   ) : (
                     <User className="w-16 h-16 text-white"/>
                   )}
