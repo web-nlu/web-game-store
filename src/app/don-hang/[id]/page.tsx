@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import {useParams} from "next/navigation";
 import CommonLoading from "@/components/common/commonLoading";
 import _ from "lodash";
-import {cancel, checkout, getStatusColor, getStatusText} from "@/utils/checkout";
+import {cancel, getStatusColor, getStatusText} from "@/utils/checkout";
 import {getStatusIcon} from "@/components/payment/getStatusIcon";
 import Button from "@/components/common/button";
 

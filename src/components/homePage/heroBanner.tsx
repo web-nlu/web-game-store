@@ -1,6 +1,6 @@
 'use client'
-import Link from "next/link";
 import {CldImage} from "next-cloudinary";
+import {routePage} from "@/utils";
 
 export default function HeroBanner() {
   return (
@@ -11,13 +11,13 @@ export default function HeroBanner() {
           <h1 className="text-3xl md:text-4xl font-bold">Mua tài khoản game chính hãng</h1>
           <p className="text-lg opacity-90">Uy tín - Nhanh chóng - Bảo hành 24/7</p>
           <div className="flex space-x-4 pt-4">
-            <Link href="/san-pham" className="bg-white text-blue-800 hover:bg-blue-100 px-6 py-3 rounded-md font-bold">
+            <div onClick={() => routePage("/san-pham")} className="cursor-pointer bg-white text-blue-800 hover:bg-blue-100 px-6 py-3 rounded-md font-bold">
               Xem sản phẩm
-            </Link>
-            <Link href="/huong-dan"
-                  className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-800 px-6 py-3 rounded-md font-bold">
+            </div>
+            <div onClick={() => routePage("/huong-dan")}
+                  className="cursor-pointer bg-transparent border-2 border-white hover:bg-white hover:text-blue-800 px-6 py-3 rounded-md font-bold">
               Hướng dẫn mua
-            </Link>
+            </div>
           </div>
         </div>
         <div className="w-full md:w-1/2 flex justify-end mt-8 md:mt-0">

@@ -64,7 +64,7 @@ export default function UserChangePassword() {
             <button
               type="button"
               onClick={() => togglePasswordVisibility('new')}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+              className="cursor-pointer absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
             >
               {showPasswords.new ? <EyeOff className="w-5 h-5"/> : <Eye className="w-5 h-5"/>}
             </button>
@@ -86,7 +86,7 @@ export default function UserChangePassword() {
             <button
               type="button"
               onClick={() => togglePasswordVisibility('confirm')}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+              className="cursor-pointer absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
             >
               {showPasswords.confirm ? <EyeOff className="w-5 h-5"/> : <Eye className="w-5 h-5"/>}
             </button>
@@ -101,7 +101,7 @@ export default function UserChangePassword() {
 
         <button
           onClick={handlePasswordSubmit}
-          className="flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          className="cursor-pointer flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
         >
           <Save className="w-5 h-5 mr-2"/>
           Cập nhật mật khẩu

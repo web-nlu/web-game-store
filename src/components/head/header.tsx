@@ -1,8 +1,8 @@
 'use client'
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import {useUserStore} from "@/service/user/userService";
 import ProfileButton from "@/components/head/ProfileButton";
+import {routePage} from "@/utils";
 
 type Props = {
   user?: UserInfo
@@ -21,6 +21,7 @@ export default function Header({user}: Props) {
     const search = formData.get("search");
     window.location.href = `/san-pham?${new URLSearchParams({keyword: search?.toString() || ""})}`
   }
+
   return (
     <header className="bg-gradient-to-r from-blue-700 to-indigo-900 text-white shadow-lg">
       <div className="container mx-auto px-4 py-3">
@@ -30,10 +31,10 @@ export default function Header({user}: Props) {
           </div>
 
           <div className="hidden md:flex items-center space-x-6">
-            <Link href="/" className="font-medium hover:text-blue-300">Trang chủ</Link>
-            <Link href="/san-pham" className="font-medium hover:text-blue-300">Sản phẩm</Link>
-            <Link href="/huong-dan" className="font-medium hover:text-blue-300">Hướng dẫn</Link>
-            <Link href="/lien-he" className="font-medium hover:text-blue-300">Liên hệ</Link>
+            <div onClick={() => routePage("/")} className="cursor-pointer font-medium hover:text-blue-300">Trang chủ</div>
+            <div onClick={() => routePage("/san-pham")} className="cursor-pointer font-medium hover:text-blue-300">Sản phẩm</div>
+            <div onClick={() => routePage("/huong-dan")} className="cursor-pointer font-medium hover:text-blue-300">Hướng dẫn</div>
+            <div onClick={() => routePage("/lien he")} className="cursor-pointer font-medium hover:text-blue-300">Liên hệ</div>
           </div>
 
           <div className="flex items-center space-x-4">
@@ -52,7 +53,7 @@ export default function Header({user}: Props) {
               </button>
             </form>
 
-            <Link href="/gio-hang" className="relative">
+            <div onClick={() => routePage("/gio-hang")} className="cursor-pointer relative">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                    className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -60,16 +61,16 @@ export default function Header({user}: Props) {
               </svg>
               <span
                 className="absolute -top-2 -right-2 bg-red-500 text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">{user?.numOfCartItem || 0}</span>
-            </Link>
+            </div>
             {
               !user ?
-                (<Link href="/dang-nhap" className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md font-medium">
+                (<div onClick={() => routePage("/dang-nhap")} className="cursor-pointer bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md font-medium">
                   Đăng nhập
-                </Link>)
+                </div>)
                : (<ProfileButton />)
             }
             <button
-              className="md:hidden"
+              className="md:hidden cursor-pointer"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -83,10 +84,10 @@ export default function Header({user}: Props) {
         {/* Mobile menu */}
         {isMenuOpen && (
           <div className="md:hidden mt-4 pb-2">
-            <Link href="/" className="block py-2 hover:bg-blue-800 px-2 rounded">Trang chủ</Link>
-            <Link href="/san-pham" className="block py-2 hover:bg-blue-800 px-2 rounded">Sản phẩm</Link>
-            <Link href="/huong-dan" className="block py-2 hover:bg-blue-800 px-2 rounded">Hướng dẫn</Link>
-            <Link href="/lien-he" className="block py-2 hover:bg-blue-800 px-2 rounded">Liên hệ</Link>
+            <div onClick={() => routePage("/")} className="cursor-pointer block py-2 hover:bg-blue-800 px-2 rounded">Trang chủ</div>
+            <div onClick={() => routePage("/san-pham")} className="cursor-pointer block py-2 hover:bg-blue-800 px-2 rounded">Sản phẩm</div>
+            <div onClick={() => routePage("/huong-dan")} className="cursor-pointer block py-2 hover:bg-blue-800 px-2 rounded">Hướng dẫn</div>
+            <div onClick={() => routePage("/lien-he")} className="cursor-pointer block py-2 hover:bg-blue-800 px-2 rounded">Liên hệ</div>
             <form action={handleSearch} className="mt-2 flex">
               <input
                 type="text"

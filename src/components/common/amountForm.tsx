@@ -25,14 +25,14 @@ export default function AmountForm({ amount, setAmount }: Props) {
     <div className="flex items-center mb-6">
       <div className="flex items-center border rounded-md">
         <button
-          className="px-3 py-2 text-gray-600 hover:bg-gray-100"
+          className="cursor-pointer px-3 py-2 text-gray-600 hover:bg-gray-100"
           onClick={decreaseQuantity}
         >
           -
         </button>
         <div className="px-3 py-2 border-x">{quantity}</div>
         <button
-          className="px-3 py-2 text-gray-600 hover:bg-gray-100"
+          className="cursor-pointer px-3 py-2 text-gray-600 hover:bg-gray-100"
           onClick={increaseQuantity}
         >
           +

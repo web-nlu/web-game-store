@@ -1,4 +1,5 @@
-import Link from "next/link";
+'use client'
+import {routePage} from "@/utils";
 
 export default function Footer() {
   return (
@@ -33,23 +34,20 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-bold mb-4">Danh mục game</h3>
             <ul className="space-y-2">
-              <li><Link href="/danh-muc/1" className="text-gray-400 hover:text-white">Liên Minh Huyền Thoại</Link></li>
-              <li><Link href="/danh-muc/2" className="text-gray-400 hover:text-white">PUBG Mobile</Link></li>
-              <li><Link href="/danh-muc/3" className="text-gray-400 hover:text-white">Genshin Impact</Link></li>
-              <li><Link href="/danh-muc/4" className="text-gray-400 hover:text-white">Valorant</Link></li>
-              <li><Link href="/danh-muc/5" className="text-gray-400 hover:text-white">Free Fire</Link></li>
-              <li><Link href="/danh-muc" className="text-gray-400 hover:text-white">Xem tất cả</Link></li>
+              <li><div onClick={() => routePage("/danh-muc/1")} className="cursor-pointer text-gray-400 hover:text-white">Liên Minh Huyền Thoại</div></li>
+              <li><div onClick={() => routePage("/danh-muc/2")} className="cursor-pointer text-gray-400 hover:text-white">PUBG Mobile</div></li>
+              <li><div onClick={() => routePage("/danh-muc/3")} className="cursor-pointer text-gray-400 hover:text-white">Genshin Impact</div></li>
+              <li><div onClick={() => routePage("/danh-muc/4")} className="cursor-pointer text-gray-400 hover:text-white">Valorant</div></li>
+              <li><div onClick={() => routePage("/danh-muc/5")} className="cursor-pointer text-gray-400 hover:text-white">Free Fire</div></li>
+              <li><div onClick={() => routePage("/danh-muc")} className="cursor-pointer text-gray-400 hover:text-white">Xem tất cả</div></li>
             </ul>
           </div>
 
           <div>
             <h3 className="text-lg font-bold mb-4">Thông tin</h3>
             <ul className="space-y-2">
-              <li><Link href="/gioi-thieu" className="text-gray-400 hover:text-white">Giới thiệu</Link></li>
-              <li><Link href="/huong-dan" className="text-gray-400 hover:text-white">Hướng dẫn mua hàng</Link></li>
-              <li><Link href="/chinh-sach" className="text-gray-400 hover:text-white">Chính sách bảo mật</Link></li>
-              <li><Link href="/dieu-khoan" className="text-gray-400 hover:text-white">Điều khoản sử dụng</Link></li>
-              <li><Link href="/tin-tuc" className="text-gray-400 hover:text-white">Tin tức</Link></li>
+              <li><div onClick={() => routePage("/gioi-thieu")} className="cursor-pointer text-gray-400 hover:text-white">Giới thiệu</div></li>
+              <li><div onClick={() => routePage("/huong-dan")} className="cursor-pointer text-gray-400 hover:text-white">Hướng dẫn mua hàng</div></li>
             </ul>
           </div>
 

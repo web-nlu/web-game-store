@@ -1,8 +1,7 @@
 'use client'
-import Link from "next/link";
 import {XCircle} from "lucide-react";
-import {checkout} from "@/utils/checkout";
 import {JSX} from "react";
+import {routePage} from "@/utils";
 
 type Props = {
   data: EventPayos
@@ -59,15 +58,15 @@ export default function Fail({data}: Props): JSX.Element {
 
           <div className="flex flex-col space-y-3 md:flex-row md:space-y-0 md:space-x-3">
 
-            <Link href="/support"
-                  className="bg-gray-600 text-white py-2 px-4 rounded-lg text-center font-medium hover:bg-gray-700 transition-colors w-full">
+            <div onClick={() => routePage("/lien-he")}
+                  className="cursor-pointer bg-gray-600 text-white py-2 px-4 rounded-lg text-center font-medium hover:bg-gray-700 transition-colors w-full">
               Liên hệ hỗ trợ
-            </Link>
+            </div>
 
-            <Link href="/"
-                  className="bg-gray-200 text-gray-700 py-2 px-4 rounded-lg text-center font-medium hover:bg-gray-300 transition-colors w-full">
+            <div onClick={() => routePage("/")}
+                  className="cursor-pointer bg-gray-200 text-gray-700 py-2 px-4 rounded-lg text-center font-medium hover:bg-gray-300 transition-colors w-full">
               Trở về trang chủ
-            </Link>
+            </div>
           </div>
         </div>
       </div>

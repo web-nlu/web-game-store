@@ -1,6 +1,5 @@
 'use client'
-import Link from "next/link";
-import {formatPrice} from "@/utils";
+import {formatPrice, routePage} from "@/utils";
 import {JSX} from "react";
 import {CldImage} from "next-cloudinary";
 import {ImageIcon} from "lucide-react";
@@ -16,15 +15,15 @@ export default function FeaturedAccount({accounts, title, direction}: Props): JS
     <section className="mb-12">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800">{title || "Tài khoản mới nhất"}</h2>
-        <Link href={`/san-pham?${new URLSearchParams(direction || {})}`} className="text-blue-600 hover:text-blue-800 font-medium">
+        <div onClick={() => routePage(`/san-pham?${new URLSearchParams(direction || {})}`)} className="cursor-pointer text-blue-600 hover:text-blue-800 font-medium">
           Xem tất cả
-        </Link>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
         {accounts.map((account) => (
-          <Link href={`/${account.id}`} key={account.id}
-                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+          <div onClick={() => routePage(`/${account.id}`)} key={account.id}
+                className="cursor-pointer bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
             <div className="h-40 bg-gray-300 relative">
               {/* Placeholder for account image */}
               { account.image ? (
@@ -61,7 +60,7 @@ export default function FeaturedAccount({accounts, title, direction}: Props): JS
               {/*      <div className="text-gray-600">Rank: <span className="font-medium">{account.diamonds}</span></div>}*/}
               {/*</div>*/}
             </div>
-          </Link>
+          </div>
         ))}
       </div>
     </section>

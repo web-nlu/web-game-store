@@ -34,13 +34,13 @@ export default function AccountDetailSlide({imageGallery}: AccountSlideProps) {
 
         {/* Navigation buttons */}
         <button
-          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-40 p-2 rounded-full text-white hover:bg-opacity-60"
+          className="cursor-pointer absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-40 p-2 rounded-full text-white hover:bg-opacity-60"
           onClick={handlePrevImage}
         >
           <ChevronLeftIcon size={24}/>
         </button>
         <button
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-40 p-2 rounded-full text-white hover:bg-opacity-60"
+          className="cursor-pointer absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-40 p-2 rounded-full text-white hover:bg-opacity-60"
           onClick={handleNextImage}
         >
           <ChevronRightIcon size={24}/>

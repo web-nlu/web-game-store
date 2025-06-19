@@ -1,8 +1,7 @@
 'use client'
 import {CheckCircle} from "lucide-react";
-import Link from "next/link";
 import {useSearchParams} from "next/navigation";
-import {formatPrice, formatVietnamTime} from "@/utils";
+import {formatPrice, formatVietnamTime, routePage} from "@/utils";
 
 type Props = {
   data: EventPayos
@@ -54,19 +53,19 @@ export default function Success({data}: Props) {
 
           <div className="flex flex-col space-y-3 md:flex-row md:space-y-0 md:space-x-3">
             <button onClick={() => window.location.href = `/don-hang/${params.get("orderCode")}`}
-                    className="bg-blue-600 text-white py-2 px-4 rounded-lg text-center font-medium hover:bg-blue-700 transition-colors w-full">
+                    className="cursor-pointer bg-blue-600 text-white py-2 px-4 rounded-lg text-center font-medium hover:bg-blue-700 transition-colors w-full">
               Xem chi tiết
             </button>
 
-            <Link href="/support"
-                  className="bg-gray-600 text-white py-2 px-4 rounded-lg text-center font-medium hover:bg-gray-700 transition-colors w-full">
+            <div onClick={() => routePage("/lien-he")}
+                  className="cursor-pointer bg-gray-600 text-white py-2 px-4 rounded-lg text-center font-medium hover:bg-gray-700 transition-colors w-full">
               Liên hệ hỗ trợ
-            </Link>
+            </div>
 
-            <Link href="/"
-                  className="bg-gray-200 text-gray-700 py-2 px-4 rounded-lg text-center font-medium hover:bg-gray-300 transition-colors w-full">
+            <div onClick={() => routePage("/")}
+                  className="cursor-pointer bg-gray-200 text-gray-700 py-2 px-4 rounded-lg text-center font-medium hover:bg-gray-300 transition-colors w-full">
               Trở về trang chủ
-            </Link>
+            </div>
           </div>
         </div>
       </div>

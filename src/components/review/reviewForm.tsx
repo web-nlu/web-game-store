@@ -41,7 +41,7 @@ export default function ReviewForm({accountId}: Props) {
               <button
                 key={star}
                 type="button"
-                className="p-1"
+                className="cursor-pointer p-1"
                 onMouseEnter={() => setFormData((prev) => ({...prev, rating: star}))}
                 onMouseLeave={() => setHoveredStar(0)}
                 onClick={() => setFormData((prev) => ({...prev, rating: star}))}

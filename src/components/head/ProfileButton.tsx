@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import Link from 'next/link';
 import {CreditCard, LogOut, Settings, User} from "lucide-react";
 import {useUserStore} from "@/service/user/userService";
 import toast from "react-hot-toast";
 import {signOut} from "next-auth/react";
 import {CldImage} from "next-cloudinary";
+import {routePage} from "@/utils";
 
 export default function ProfileButton() {
   const [isOpen, setIsOpen] = useState(false);
@@ -84,24 +84,28 @@ export default function ProfileButton() {
               </p>
             </div>
           </div>
-          <Link
-            href="/cai-dat"
-            className="block flex flex-row gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-            onClick={() => setIsOpen(false)}
+          <div
+            className="cursor-pointer block flex flex-row gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            onClick={() => {
+              setIsOpen(false)
+              routePage("/cai-dat")
+            }}
           >
             <Settings size={18} />
             Cài đặt
-          </Link>
-          <Link
-            href="/don-hang"
-            className="block flex flex-row gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-            onClick={() => setIsOpen(false)}
+          </div>
+          <div
+            className="cursor-pointer block flex flex-row gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            onClick={() => {
+              setIsOpen(false)
+              routePage("/don-hang")
+            }}
           >
             <CreditCard size={18} />
             Lịch sử mua hàng
-          </Link>
+          </div>
           <div
-            className="block flex flex-row gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            className="cursor-pointer block flex flex-row gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
             onClick={logout}
           >
             <LogOut color={"red"} size={18} />

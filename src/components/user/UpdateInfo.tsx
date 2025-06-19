@@ -2,18 +2,19 @@
 import {Phone, Save} from "lucide-react";
 import React, {useEffect, useState} from "react";
 import {useUserStore} from "@/service/user/userService";
-import _ from "lodash";
 
 export default function UpdateInfo() {
   const {user, update} = useUserStore()
   const [formData, setFormData] = useState({
     phoneNumber: '',
+    numOfCartItem: 0
   } as UserInfo);
 
   useEffect(() => {
-    setFormData({
+    setFormData((prev) => ({
+      ...prev,
       phoneNumber: user?.phoneNumber || '',
-    })
+    }))
   }, [JSON.stringify(user)])
 
   const onSubmit = () => {
@@ -47,7 +48,8 @@ export default function UpdateInfo() {
           <input
             type="tel"
             value={formData.phoneNumber}
-            onChange={(event) => setFormData({phoneNumber: event.target.value})}
+            onChange={(event) =>
+              setFormData((prev) => ({...prev, phoneNumber: event.target.value}))}
             placeholder="Nhập số điện thoại mới"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
@@ -55,7 +57,7 @@ export default function UpdateInfo() {
 
         <button
           onClick={onSubmit}
-          className="flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          className="cursor-pointer flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
         >
           <Save className="w-5 h-5 mr-2"/>
           Cập nhật số điện thoại

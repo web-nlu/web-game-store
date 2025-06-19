@@ -23,3 +23,7 @@ export function getCookie(name: string, cookie: string): string | null {
   const match = cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
   return match ? match[2] : null;
 }
+
+export function routePage (path: string) {
+  window.location.href = path
+}

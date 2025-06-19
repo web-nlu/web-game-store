@@ -46,7 +46,7 @@ export default function CartItem({item, index, onRemove}: Props) {
           <div className="mt-4 flex items-center justify-between">
             <button
               onClick={remove}
-              className="text-red-600 hover:text-red-800 transition flex items-center"
+              className="cursor-pointer text-red-600 hover:text-red-800 transition flex items-center"
               aria-label="Xóa sản phẩm"
             >
               <Trash2 size={18} className="mr-1"/>

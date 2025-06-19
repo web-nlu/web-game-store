@@ -1,8 +1,7 @@
 "use client"
-import Link from "next/link";
 import React, {useEffect, useState} from "react";
 import EmptyCart from "@/components/cart/EmptyCart";
-import {formatPrice} from "@/utils";
+import {formatPrice, routePage} from "@/utils";
 import {CreditCard, Trash2} from "lucide-react";
 import CartItem from "@/components/cart/cartItem";
 import _ from "lodash";
@@ -57,10 +56,10 @@ export default function CartPage() {
     <div className="min-h-screen bg-gray-100">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-6">
-          <Link href="/game-accounts" className="inline-flex items-center text-blue-600 hover:text-blue-800 transition">
+          <div onClick={() => routePage("/san-pham")} className="cursor-pointer inline-flex items-center text-blue-600 hover:text-blue-800 transition">
             {/*<ChevronLeft size={20}/>*/}
             <span>Tiếp tục mua sắm</span>
-          </Link>
+          </div>
         </div>
 
         <h1 className="text-3xl font-bold mb-8">Giỏ Hàng</h1>
@@ -117,7 +116,7 @@ export default function CartPage() {
                 <div className="mt-8">
                   <button
                     onClick={onCheckout}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg transition flex items-center justify-center">
+                    className="cursor-pointer w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg transition flex items-center justify-center">
                     <CreditCard size={20} className="mr-2"/>
                     <span>Tiến hành thanh toán</span>
                   </button>

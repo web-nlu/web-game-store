@@ -44,7 +44,7 @@ export default function PersonalSettings() {
                     <button
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id)}
-                      className={`w-full flex items-center px-4 py-3 rounded-lg transition-all duration-200 ${
+                      className={`cursor-pointer w-full flex items-center px-4 py-3 rounded-lg transition-all duration-200 ${
                         activeTab === tab.id
                           ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600'
                           : 'text-gray-600 hover:bg-gray-50'
